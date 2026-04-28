@@ -20,8 +20,9 @@ Also handles GET /internal/log-message:
 Part of the Observability Mandate (kingdonb/mecris#245, kingdonb/mecris#213).
 Follows the componentize-py / Spin KV pattern established in budget-governor-py.
 
-Build:
-    uv run componentize-py -w spin:up/http-trigger@4.0.0 componentize app -o log-message-py.wasm
+Legacy-cloud branch — Spin SDK v3 (sync API).
+Build: pip install componentize-py==0.13.0 spin-sdk==3.0.0
+       componentize-py -w spin:http-trigger@0.2.0 componentize app -o log-message-py.wasm
 
 Plan: yebyen/mecris#267
 """
@@ -175,10 +176,10 @@ def _dump_log_to_json(log: List[Dict[str, Any]]) -> bytes:
 # ---------------------------------------------------------------------------
 
 class HttpHandler(http.Handler):
-    async def handle_request(self, request: Request) -> Response:
+    def handle_request(self, request: Request) -> Response:
         try:
-            with (await kv.open_default()) as store:
-                raw = await store.get(_KV_MESSAGE_LOG_KEY)
+            with kv.open_default() as store:
+                raw = store.get(_KV_MESSAGE_LOG_KEY)
                 log = _load_log_from_json(raw)
 
                 method = getattr(request, "method", "POST").upper()
@@ -202,7 +203,7 @@ class HttpHandler(http.Handler):
 
                 entry = make_log_entry(params["type"], params["channel"], params["sent_at"])
                 log = append_entry(log, entry)
-                await store.set(_KV_MESSAGE_LOG_KEY, _dump_log_to_json(log))
+                store.set(_KV_MESSAGE_LOG_KEY, _dump_log_to_json(log))
 
                 return Response(
                     200,
@@ -222,6 +223,6 @@ class HttpHandler(http.Handler):
                 _error_json("internal error"),
             )
 
-# Mandatory export for spin-sdk v4
+# Spin SDK v3 entry point
 if _SPIN_AVAILABLE:
     incoming_handler = HttpHandler()

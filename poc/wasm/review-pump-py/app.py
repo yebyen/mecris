@@ -10,6 +10,8 @@ Body JSON: {
   "unit": <string>             # "points" | "cards"
 }
 Returns JSON: PumpStatus object
+
+Legacy-cloud branch — Spin SDK v3 (sync API).
 """
 
 import json
@@ -100,7 +102,7 @@ def _parse_request(body_bytes: bytes) -> dict:
 
 if _SPIN_AVAILABLE:
     class HttpHandler(http.Handler):
-        async def handle_request(self, request: Request) -> Response:
+        def handle_request(self, request: Request) -> Response:
             try:
                 params = _parse_request(request.body)
                 result = get_status(
@@ -115,5 +117,5 @@ if _SPIN_AVAILABLE:
                 print(f"review_pump_py component error: {exc}")
                 return Response(500, {"content-type": "application/json"}, _error_json("internal error"))
 
-    # Mandatory export for spin-sdk v4
+    # Spin SDK v3 entry point
     incoming_handler = HttpHandler()

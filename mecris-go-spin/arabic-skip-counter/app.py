@@ -3,6 +3,10 @@ arabic-skip-counter WASM component — app.py (Phase 1.6 / kingdonb/mecris#157)
 
 HTTP trigger: GET /internal/arabic-skip-count?user_id=<id>&hours=<n>
 Returns JSON: {"skip_count": <u32>}
+
+Legacy-cloud branch — Spin SDK v3 (sync API).
+Build: pip install componentize-py==0.13.0 spin-sdk==3.0.0
+       componentize-py -w spin:http-trigger@0.2.0 componentize app -o arabic-skip-counter.wasm
 """
 
 import json
@@ -78,7 +82,7 @@ def _error_json(message: str) -> bytes:
     return json.dumps({"error": message}).encode()
 
 class HttpHandler(http.Handler):
-    async def handle_request(self, request: Request) -> Response:
+    def handle_request(self, request: Request) -> Response:
         try:
             params = _parse_query_params(request.uri)
             user_id = params.get("user_id", "").strip()
@@ -100,7 +104,7 @@ class HttpHandler(http.Handler):
                     _error_json(f"invalid hours value: {hours_str!r}"),
                 )
             
-            neon_url = (await _spin_variables.get("neon_db_url")) or ""
+            neon_url = _spin_variables.get("neon_db_url") or ""
             count = _count_reminders(neon_url, user_id, hours)
             return Response(
                 200,
@@ -115,6 +119,6 @@ class HttpHandler(http.Handler):
                 _error_json("internal error"),
             )
 
-# Mandatory export for spin-sdk v4
+# Spin SDK v3 entry point
 if _SPIN_AVAILABLE:
     incoming_handler = HttpHandler()

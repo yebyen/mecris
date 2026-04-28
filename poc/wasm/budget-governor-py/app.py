@@ -11,6 +11,10 @@ Body JSON: {
   "cost": <float>
 }
 Returns JSON: Action-specific response dict
+
+Legacy-cloud branch — Spin SDK v3 (sync API).
+Build: pip install componentize-py==0.13.0 spin-sdk==3.0.0
+       componentize-py -w spin:http-trigger@0.2.0 componentize app -o budget-governor-py.wasm
 """
 
 import json
@@ -245,7 +249,7 @@ def make_spend_entry(bucket_name: str, cost: float) -> Dict[str, Any]:
     }
 
 
-async def _get_bucket_config_from_spin_vars() -> Dict[str, Any]:
+def _get_bucket_config_from_spin_vars() -> Dict[str, Any]:
     limits: Dict[str, float] = {}
     var_map = {
         "helix": "helix_credit_limit",
@@ -255,7 +259,7 @@ async def _get_bucket_config_from_spin_vars() -> Dict[str, Any]:
     }
     for bucket, var_name in var_map.items():
         try:
-            val = await variables.get(var_name)
+            val = variables.get(var_name)
             if val:
                 limits[bucket] = float(val)
         except Exception:
@@ -263,10 +267,10 @@ async def _get_bucket_config_from_spin_vars() -> Dict[str, Any]:
     return make_bucket_config(limits if limits else None)
 
 
-async def _fetch_helix_balance_spin(base_url: str, api_key: str) -> Optional[float]:
+def _fetch_helix_balance_spin(base_url: str, api_key: str) -> Optional[float]:
     try:
         from spin_sdk.http import send as spin_send
-        resp = await spin_send(
+        resp = spin_send(
             Request(
                 "GET",
                 f"{base_url.rstrip('/')}/api/v1/me",
@@ -285,23 +289,23 @@ async def _fetch_helix_balance_spin(base_url: str, api_key: str) -> Optional[flo
 
 
 class HttpHandler(http.Handler):
-    async def handle_request(self, request: Request) -> Response:
+    def handle_request(self, request: Request) -> Response:
         try:
             params = _parse_request(request.body)
             action = params["action"]
 
-            with (await kv.open_default()) as store:
-                raw = await store.get(_KV_SPEND_LOG_KEY)
+            with kv.open_default() as store:
+                raw = store.get(_KV_SPEND_LOG_KEY)
                 spend_log = _load_spend_log_from_json(raw)
-                bucket_config = await _get_bucket_config_from_spin_vars()
+                bucket_config = _get_bucket_config_from_spin_vars()
 
                 if action == "status":
                     helix_live = None
                     try:
-                        base_url = (await variables.get("anthropic_base_url")) or ""
-                        api_key = (await variables.get("anthropic_api_key")) or ""
+                        base_url = variables.get("anthropic_base_url") or ""
+                        api_key = variables.get("anthropic_api_key") or ""
                         if base_url and api_key:
-                            helix_live = await _fetch_helix_balance_spin(base_url, api_key)
+                            helix_live = _fetch_helix_balance_spin(base_url, api_key)
                     except Exception:
                         pass
                     result = get_status(spend_log, bucket_config, helix_live)
@@ -322,7 +326,7 @@ class HttpHandler(http.Handler):
                         return Response(400, {"content-type": "application/json"}, _error_json(f"unknown bucket: {bucket!r}"))
                     entry = make_spend_entry(bucket, cost)
                     spend_log.append(entry)
-                    await store.set(_KV_SPEND_LOG_KEY, _dump_spend_log_to_json(spend_log))
+                    store.set(_KV_SPEND_LOG_KEY, _dump_spend_log_to_json(spend_log))
                     return Response(200, {"content-type": "application/json"}, _json_ok({"recorded": True, "bucket": bucket, "cost": cost}))
 
                 elif action == "recommend":
@@ -347,6 +351,6 @@ class HttpHandler(http.Handler):
             return Response(500, {"content-type": "application/json"}, _error_json("internal error"))
 
 
-# Mandatory export for spin-sdk v4
+# Spin SDK v3 entry point
 if _SPIN_AVAILABLE:
     incoming_handler = HttpHandler()
