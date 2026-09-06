@@ -2,7 +2,10 @@
   "mcpServers": {
     "github": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       }
@@ -12,13 +15,16 @@
       "args": [
         "--quiet",
         "run",
-        "--project", "/Users/yebyen/w/mecris",
+        "--project",
+        "/Users/yebyen/w/mecris",
         "/Users/yebyen/w/mecris/mcp_server.py",
         "--stdio"
       ],
       "env": {
         "PYTHONPATH": "/Users/yebyen/w/mecris",
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "DEFAULT_USER_ID": "c0a81a4b-115a-4eb6-bc2c-40908c58bf64",
+        "MECRIS_USER_ID": "c0a81a4b-115a-4eb6-bc2c-40908c58bf64"
       }
     }
   }
