@@ -2,7 +2,7 @@
 type: Architecture
 title: PocketID Authentication and Session Lifecycle
 description: PocketID/AppAuth authentication uses shared repository state, rotating refresh tokens, and bounded refresh operations across Android and background workers.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: services/auth_service.py
   - resource: services/auth_server.py

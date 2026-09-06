@@ -2,7 +2,7 @@
 type: Architecture
 title: MCP Server (`mcp_server.py`)
 description: The Python stdio MCP server is the interactive integration layer for accountability, budget, language, scheduling, GitHub, and health operations.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: mcp_server.py
   - resource: .mcp.json

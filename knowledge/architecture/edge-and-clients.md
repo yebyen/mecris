@@ -2,7 +2,7 @@
 type: Architecture
 title: Edge Runtimes & Clients
 description: The misnamed mecris-go family: Android client, Rust/Spin edge components, and a small Go sync service.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: mecris-go/README.md
   - resource: mecris-go-project/README.md

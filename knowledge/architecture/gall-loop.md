@@ -2,7 +2,7 @@
 type: Architecture
 title: Mecris Gall Loop
 description: The Mecris loop turns orientation into an auditable plan, bounded work, serialized state, and tested delivery.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: .github/skills/mecris-orient/SKILL.md
   - resource: .github/skills/mecris-plan/SKILL.md

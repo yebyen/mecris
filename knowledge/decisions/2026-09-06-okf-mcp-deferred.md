@@ -2,7 +2,7 @@
 type: Decision
 title: Defer OKF MCP Server Integration
 description: Keep OKF on the CLI for now: an stdio initialize smoke test succeeded but the server did not expose tools/list under the tested protocol, so .mcp.json remains unchanged.
-generated: { by: agent/cli, at: 2026-09-06T16:20:47Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: okf mcp knowledge smoke test, 2026-09-06
 ---

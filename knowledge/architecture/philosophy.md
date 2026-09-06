@@ -2,7 +2,7 @@
 type: Architecture
 title: Mecris Architectural Philosophy: The Diseased Forest
 description: Mecris uses a memorable forest/iron metaphor for a local-first accountability system whose durable truth is its user-scoped data.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: ARCHITECTURE.md
 ---

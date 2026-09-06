@@ -2,7 +2,7 @@
 type: Decision
 title: Critical Situation: Budget Expired, Walk Needed, Reviewstack Derailing Tomorrow
 description: A recorded live snapshot that triggered budget extension and accountability priorities; it is historical, not current status.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: session_log.md
   - resource: mcp_server.py

@@ -9,3 +9,4 @@
 * [Narrator Context as Primary Agent Sensor](narrator-context.md) - The narrator-context MCP response is the compact live situation report combining goals, budget, daily aggregate, system health, recommendations, and presence.
 * [Daily Aggregate and Majesty Cake](daily-aggregate.md) - The daily accountability aggregate combines daily walk, Arabic review, and Greek review into a compact score consumed by the Majesty Cake widget.
 * [Edge Runtimes & Clients](edge-and-clients.md) - The misnamed mecris-go family: Android client, Rust/Spin edge components, and a small Go sync service.
+* [Beeminder Majesty Cake Integration](beeminder-majesty-cake.md) - The Majesty Cake widget visualizes daily accountability as X/Y goals satisfied, drawing from Beeminder goal data and the daily aggregate of walk, Arabic review, and Greek review.

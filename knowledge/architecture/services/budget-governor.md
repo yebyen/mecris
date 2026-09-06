@@ -2,7 +2,7 @@
 type: Architecture
 title: Budget Governor Service
 description: Python budget-governor logic enforces provider/bucket envelopes and supplies routing recommendations to agents.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: services/budget_governor.py
   - resource: docs/BUDGET_GOVERNOR_SPEC.md

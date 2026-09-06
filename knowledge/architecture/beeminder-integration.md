@@ -2,7 +2,7 @@
 type: Architecture
 title: Beeminder Accountability Integration
 description: Beeminder is the live source for goal runways, derail risk, daily activity, and emergency prioritization.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: beeminder_client.py
   - resource: docs/BEEMINDER_ACTIVITY_TRACKING.md

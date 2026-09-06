@@ -1,4 +1,39 @@
 ## 2026-09-06
+* **Update**: Linked `runbooks/okf-maintenance.md` to `runbooks/beeminder-emergency.md` (Both runbooks address urgent situations: maintenance vs. emergency goal response.).
+* **Update**: Updated concept `runbooks/okf-maintenance.md`.
+* **Update**: Linked `runbooks/okf-maintenance.md` to `runbooks/agent-bootstrap.md` (Maintenance runbook is consulted periodically after bootstrapping a session.).
+* **Update**: Updated concept `runbooks/okf-maintenance.md`.
+* **Update**: Linked `runbooks/okf-maintenance.md` to `architecture/overview.md` (OKF maintenance keeps the curated knowledge base that supports the system overview.).
+* **Update**: Updated concept `runbooks/okf-maintenance.md`.
+* **Update**: Linked `architecture/beeminder-majesty-cake.md` to `architecture/overview.md` (Majesty Cake is a key accountability widget shown in the system overview.).
+* **Update**: Updated concept `architecture/beeminder-majesty-cake.md`.
+* **Update**: Linked `decisions/2026-09-06-budget-extension.md` to `architecture/overview.md` (Budget health is a key system health indicator shown in the architecture overview.).
+* **Update**: Updated concept `decisions/2026-09-06-budget-extension.md`.
+* **Update**: Linked `decisions/2026-09-06-budget-extension.md` to `architecture/narrator-context.md` (Budget extension is reflected in the narrator context budget_status field.).
+* **Update**: Updated concept `decisions/2026-09-06-budget-extension.md`.
+* **Update**: Linked `decisions/2026-09-06-budget-extension.md` to `architecture/services/budget-governor.md` (Decision records the budget period extension action performed on the budget-governor service.).
+* **Update**: Updated concept `decisions/2026-09-06-budget-extension.md`.
+* **Update**: Linked `runbooks/okf-maintenance.md` to `runbooks/beeminder-emergency.md` (Both runbooks address urgent situations: maintenance vs. emergency goal response.).
+* **Update**: Updated concept `runbooks/okf-maintenance.md`.
+* **Update**: Linked `runbooks/okf-maintenance.md` to `runbooks/agent-bootstrap.md` (Maintenance runbook is consulted periodically after bootstrapping a session.).
+* **Update**: Updated concept `runbooks/okf-maintenance.md`.
+* **Update**: Linked `runbooks/okf-maintenance.md` to `architecture/overview.md` (OKF maintenance keeps the curated knowledge base that supports the system overview.).
+* **Update**: Updated concept `runbooks/okf-maintenance.md`.
+* **Update**: Linked `architecture/beeminder-majesty-cake.md` to `architecture/overview.md` (Majesty Cake is a key accountability widget shown in the system overview.).
+* **Update**: Updated concept `architecture/beeminder-majesty-cake.md`.
+* **Creation**: Documented concept `runbooks/okf-maintenance.md` (OKF Knowledge Base Maintenance).
+* **Update**: Linked `architecture/beeminder-majesty-cake.md` to `architecture/daily-aggregate.md` (Majesty Cake displays the daily aggregate score (X/Y) computed from walk, Arabic review, and Greek review.).
+* **Update**: Updated concept `architecture/beeminder-majesty-cake.md`.
+* **Update**: Linked `architecture/beeminder-majesty-cake.md` to `architecture/beeminder-integration.md` (Majesty Cake reads live Beeminder goal status via the Beeminder integration.).
+* **Update**: Updated concept `architecture/beeminder-majesty-cake.md`.
+* **Creation**: Documented concept `architecture/beeminder-majesty-cake.md` (Beeminder Majesty Cake Integration).
+* **Update**: Linked `decisions/2026-09-06-budget-extension.md` to `architecture/overview.md` (Budget health is a key system health indicator shown in the architecture overview.).
+* **Update**: Updated concept `decisions/2026-09-06-budget-extension.md`.
+* **Update**: Linked `decisions/2026-09-06-budget-extension.md` to `architecture/narrator-context.md` (Budget extension is reflected in the narrator context budget_status field.).
+* **Update**: Updated concept `decisions/2026-09-06-budget-extension.md`.
+* **Update**: Linked `decisions/2026-09-06-budget-extension.md` to `architecture/services/budget-governor.md` (Decision records the budget period extension action performed on the budget-governor service.).
+* **Update**: Updated concept `decisions/2026-09-06-budget-extension.md`.
+* **Creation**: Documented concept `decisions/2026-09-06-budget-extension.md` (Budget Period Extension to 2026-10-07).
 * **Update**: Updated concept `decisions/2026-09-06-okf-mcp-deferred.md`.
 * **Update**: Linked `decisions/2026-09-06-okf-mcp-deferred.md` to `runbooks/agent-bootstrap.md` (Bootstrap continues to use the supported OKF CLI workflow).
 * **Update**: Updated concept `decisions/2026-09-06-okf-mcp-deferred.md`.

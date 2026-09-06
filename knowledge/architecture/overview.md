@@ -2,7 +2,7 @@
 type: Architecture
 title: Mecris System Architecture Overview
 description: Mecris is a personal accountability system centered on a Python MCP integration layer, user-scoped Neon state, Android/edge clients, and an auditable agent loop.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: ARCHITECTURE.md
   - resource: README.md

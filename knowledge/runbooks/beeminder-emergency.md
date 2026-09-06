@@ -2,7 +2,7 @@
 type: Runbook
 title: Beeminder Emergency Response
 description: A short procedure for interpreting live goal risk and selecting the smallest action before derailment.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 stale_after: 2026-12-05
 sources:
   - resource: docs/BEEMINDER_PRIORITY_LORE.md

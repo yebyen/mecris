@@ -2,7 +2,7 @@
 type: Architecture
 title: Language Coaching Service
 description: Python language-coaching operations synchronize review pumps and expose velocity/completion information used by daily accountability.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: services/coaching_service.py
   - resource: docs/linguistics

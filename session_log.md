@@ -478,3 +478,16 @@ OKF Knowledge Base Setup Complete - 2026-09-06: Initialized OKF v0.2 bundle, cre
 **Next**: PR [#294](https://github.com/kingdonb/mecris/pull/294) is open. Verify its required CI workflow, including OKF validation, then use a real `/mecris-orient` run to measure bootstrap efficiency.
 
 **Archive completion**: Committed as `1aae09ec`, pushed branch `okf/knowledge-improvement`, and opened PR #294. At archive time, **Run Complete Test Suite** was pending.
+
+## 2026-09-06 — OKF knowledge base improvements and validation
+
+**Planned**: Improve the OKF knowledge base by correcting concept bodies, adding missing sources, fixing relationships, pruning low-value nodes, and adding maintenance automation.
+
+**Done**: Fixed broken links and duplicate entries in concept files; added budget extension decision, Beeminder Majesty Cake integration, and OKF maintenance runbook; updated all concept `generated.by` to `agent/claude-fable-5.1`; ensured `stale_after` on time-sensitive runbooks and decisions; deduplicated Related Concepts sections; validated that the bundle passes strict validation with 0 errors, 0 warnings, 0 broken links, 0 orphans (now 21 concepts). Updated NEXT_SESSION.md to reflect current status.
+
+**Skipped**: OKF MCP registration remains deferred due to incomplete tool exposure in the tested protocol.
+
+**Validation**: `okf validate knowledge --strict --drift` passes with clean gate.
+
+**Next**: Await PR #294 merge into main, then use the updated OKF bundle in future sessions for orientation and knowledge impact tracking.
+

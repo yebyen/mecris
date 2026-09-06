@@ -2,7 +2,7 @@
 type: Architecture
 title: Narrator Context as Primary Agent Sensor
 description: The narrator-context MCP response is the compact live situation report combining goals, budget, daily aggregate, system health, recommendations, and presence.
-generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: docs/NARRATOR_CONTEXT_ARCHITECTURE.md
   - resource: mcp_server.py
