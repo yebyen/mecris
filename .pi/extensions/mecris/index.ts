@@ -171,8 +171,14 @@ function renderMcpContent(result: any): { text: string; isError: boolean } {
 }
 
 function parseMcpObject(result: any): Record<string, any> {
-  if (result?.structuredContent && typeof result.structuredContent === "object") {
-    return result.structuredContent;
+  // FastMCP returns structured content as { result: <tool payload> }.
+  // Prefer that payload; fall back to the JSON text representation.
+  const structured = result?.structuredContent;
+  if (structured && typeof structured === "object") {
+    if (structured.result && typeof structured.result === "object") {
+      return structured.result;
+    }
+    return structured;
   }
   for (const item of Array.isArray(result?.content) ? result.content : []) {
     if (item?.type === "text" && typeof item.text === "string") {
