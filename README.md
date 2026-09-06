@@ -42,15 +42,14 @@ See [docs/PI_MECRIS_GUIDE.md](docs/PI_MECRIS_GUIDE.md) for detailed configuratio
 For detailed setup instructions for different agents, see [docs/SETUP_GUIDE.md](docs/SETUP_GUIDE.md).
 
 ```bash
-# 1. Install dependencies using uv
-uv venv
-source .venv/bin/activate
-uv pip install -r requirements.txt
+# 1. Install dependencies (bin/mecris activates .venv automatically)
+uv venv  # .venv created automatically by bin/mecris script
+bin/mecris login  # Self-activates .venv, sets PYTHONPATH, launches auth
 
 # 2. Configure environment (copy and edit .env.example if needed)
 # Set BEEMINDER_USERNAME, BEEMINDER_AUTH_TOKEN, TWILIO credentials, etc.
 
-# 3. Launch the MCP server
+# 3. Launch the MCP server (local Python backend: mcp_server.py)
 ./scripts/launch_server.sh
 
 # 4. Test health endpoint
@@ -70,8 +69,8 @@ Mecris is a **cloud-coordinated, local-first** accountability system. It is desi
                 ┌────────────────┴──────┐      ▼────────────────┐
                 │   CLOUD HUB (WASM API)│      │   LOCAL MCP    │
                 ├───────────────────────┤      │ (Python / SQL) │
-                │   FREE: FERMYON       │      └──────┬─────────┘
-                │   PRO: AKAMAI CRON    │             │
+                │   INACTIVE: FERMYON  │      └──────┬─────────┘
+                │   ACTIVE: AKAMAI     │             │
                 └───────────┬───────────┘             │
                             │                         │
            ┌────────────────┴─────────────────────────┴──────────────┐
@@ -104,7 +103,7 @@ Mecris can be driven by multiple agent harnesses. Each has different tradeoffs (
 
 | Harness | Model Backend | Local-First? | Token Efficiency | Status | Docs |
 |---|---|---|---|---|---|
-| **py_harness** | Ollama (Gemma 4, Qwen) | ✅ Yes | ⭐⭐⭐ (1.5k core) | ✅ Active | [py_harness/README.md](py_harness/README.md) |
+| **py_harness** | Ollama (Gemma 4, Qwen) | ✅ Yes | ⭐⭐⭐ (1.5k core) | ⚠️ Partial (harness exists; not fully documented in OKF bundle) | [py_harness/README.md](py_harness/README.md) |
 | **Pi (TypeScript extension)** | Any (Copilot, Groq, Anthropic, Google, local) | Optional | ⭐⭐ (5 tools + loader) | ✅ Active | [docs/PI_MECRIS_GUIDE.md](docs/PI_MECRIS_GUIDE.md) |
 | **Claude Code** | Claude models | ❌ No | ⭐⭐ (all 34 tools) | ✅ Active | [.mcp.json](.mcp.json) |
 | **Gemini CLI** | Gemini models | ❌ No | ⭐⭐ (all 34 tools) | ✅ Active | [.gemini/settings.json](.gemini/settings.json) |
@@ -178,9 +177,9 @@ See [docs/PI_HARNESS_ROADMAP.md](docs/PI_HARNESS_ROADMAP.md) for detailed parity
 - **Documentation**: Organized into `/docs` directory
 
 ### 📋 Next Priorities
-- **Majesty Cake UI**: Implement the visual reward widget in the Android app.
-- **Multi-User Twilio**: Migrate Twilio logic to the WASM brain for full multi-tenancy.
-- **Rust Reminder Engine**: Port heuristic logic from Python to Rust/WASM.
+- **Majesty Cake UI** (In Progress): Widget defined in `architecture/beeminder-majesty-cake.md`; Android integration planned per `ROADMAP.md` and `decisions/2026-09-06-cloud-easing.md`.
+- **WASM Brain / Multi-User Twilio** (Future / Planned): WASM brain concept referenced in `docs/architectural_evolution/01_the_bootstrap_era.md` (historical design); multi-user migration planned per `ROADMAP.md`.
+- **Rust Reminder Engine** (Future): Planned per `ROADMAP.md`; currently handled by Python `services/coaching-service.py`.
 
 ## Design Principles
 
