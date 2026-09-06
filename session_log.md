@@ -514,3 +514,7 @@ OKF Knowledge Base Setup Complete - 2026-09-06: Initialized OKF v0.2 bundle, cre
 **Knowledge delta**: Added deterministic-status decision; updated MCP server, narrator context, daily aggregate, Gall loop, bootstrap, roadmap, Beeminder emergency, and maintenance concepts; removed stale architecture index entries.
 
 **Next**: In a fresh Pi session run `/reload`, test `/status` and `/mecris`, then merge PR #296 after current CI passes.
+
+### Follow-up validation
+
+The user confirmed both status paths in a fresh Pi session. Native `/status` returned complete deterministic data after the FastMCP unwrap fix, and model-mediated `/mecris` produced the intended richer narrative. Immediate footer feedback was added to cover narrator-context latency. Root and extension READMEs now distinguish the two paths and correctly state that `uv sync` creates `.venv` while `bin/mecris` only activates it.

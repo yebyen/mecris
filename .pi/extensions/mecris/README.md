@@ -21,7 +21,7 @@ pi -e ./.pi/extensions/mecris/index.ts
 
 ## Use
 
-- `/status` — deterministic five-line live status. Calls `get_narrator_context` directly and does not invoke the model.
+- `/status` — deterministic five-line live status. Immediately shows `Fetching Mecris status…`, calls `get_narrator_context` directly, and does not invoke the model.
 - `/mecris [focus]` — ask the model for a focused interpretation of live context.
 - `/mecris-reconnect` — restart the bridge without a full `/reload`.
 - Non-core tools are deferred; the model activates them via `mecris_load_tools`.

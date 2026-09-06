@@ -29,10 +29,11 @@
 
 ## Pending Before Merge
 
-- [ ] In a fresh Pi session, run `/reload`, then `/status`; confirm five populated lines and no model turn.
-- [ ] Run `/mecris` once and confirm the selected model still provides the richer narrative path.
-- [ ] Wait for the latest PR #296 CI run after the maintenance commits.
-- [ ] Merge PR #296 only after those checks pass.
+- [x] In a fresh Pi session, `/status` returned five populated deterministic lines without a model turn.
+- [x] `/mecris` provided the richer model-interpreted status successfully.
+- [x] `/status` now gives immediate footer feedback while narrator context is gathered.
+- [ ] Wait for the latest PR #296 CI run after the final documentation commits.
+- [ ] Merge PR #296 only after CI passes.
 
 ## Local Environment Note
 
