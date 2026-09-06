@@ -12,6 +12,7 @@
      - Added full test suite `AuthErrorTest.kt` (100% green).
   3. **Documentation & Blog**: Authored [`blog/2026-08-16-pocketid-v2-13-and-the-30-day-refresh-token.md`](file:///Users/yebyen/w/mecris/blog/2026-08-16-pocketid-v2-13-and-the-30-day-refresh-token.md).
   4. **Full Ecosystem Version Bump**: Synced version `0.0.1` (VC=32) across `VERSION_MANIFEST.json`, Android `build.gradle.kts`, Spin manifests, `pyproject.toml`, and Web `package.json`.
+  5. **OKF Knowledge Base Setup**: Initialized OKF v0.2 bundle, created 17 high-value architectural concepts, built knowledge graph with semantic relationships, validated all core operations (create, update, search, show, validate, relate).
 
 ---
 
