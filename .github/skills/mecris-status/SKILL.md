@@ -39,3 +39,10 @@ No Prior Knowledge section, no commit log, no issue list, no OKF search results.
 ```bash
 /status        # Minimal report: budget + beeminder + pulse + action
 ```
+
+## Reasoning Constraint (Critical)
+Keep reasoning brief (≤3 lines of thought). Do NOT overthink — this is a quick check, not a full orientation. Focus only on:
+1. Resolve user_id (automatic, never ask).
+2. Call `mecris_get_narrator_context` (single call).
+3. Extract exactly 5 bullets from the response (budget, beeminder, pulse, aggregate, action).
+Do not search OKF, read session logs, or analyze relationships. The full `/mecris-orient` handles that.
