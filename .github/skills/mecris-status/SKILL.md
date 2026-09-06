@@ -35,6 +35,9 @@ Include ONLY:
 
 No Prior Knowledge section, no commit log, no issue list, no OKF search results.
 
+## Reasoning Constraint (Critical — Prevents Agent Confusion)
+Keep reasoning brief (≤3 short lines of thought). Do NOT invoke full OKF contract rules (search-before-write, provenance verification, strict retrieval, no blanket scans) — those apply to `/mecris-orient` and durable concept creation, not to `/status`. Do NOT reference all 21 skills or 50+ MCP tools. Focus ONLY on: resolve UUID automatically → call `mecris_get_narrator_context` once → extract 5 bullets from response. Skip `OKF` search, skip `AGENTS.md` contract checks, skip `NEXT_SESSION.md` deep analysis, skip issue fetch. Brief only — this is a quick status check, not an orientation session.
+
 ## Usage
 ```bash
 /status        # Minimal report: budget + beeminder + pulse + action

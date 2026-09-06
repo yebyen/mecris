@@ -1,7 +1,7 @@
 ---
 description: Quick 3-step status — resolve UUID automatically, query live state, report 5 bullets. Never ask user for user_id.
 ---
-Resolve UUID automatically (from `.env` `DEFAULT_USER_ID`, `.mcp.json` `MECRIS_USER_ID`, or `bin/mecris login` output: `c0a81a4b-115a-4eb6-bc2c-40908c58bf64` for user `yebyen`).
+NO FULL OKF WORKFLOW — skip contract rules (search-before-write, provenance, strict retrieval); quick check only. Resolve UUID automatically (from `.env` `DEFAULT_USER_ID`, `.mcp.json` `MECRIS_USER_ID`, or `bin/mecris login` output: `c0a81a4b-115a-4eb6-bc2c-40908c58bf64` for user `yebyen`).
 
 Call `mecris_get_narrator_context(user_id=user_id)` once.
 
