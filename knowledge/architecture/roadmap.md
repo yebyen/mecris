@@ -5,7 +5,7 @@ generated: { by: agent/gpt-5.6-sol, at: 2026-09-06T23:07:26Z }
 sources:
   - resource: docs/ROADMAP.md
   - resource: docs/ARCHITECTURE.md
-  - resource: docs/OKF_IMPROVEMENT_PLAN.md
+  - resource: docs/attic/OKF_IMPROVEMENT_PLAN.md
 ---
 
 # Strategic Roadmap
@@ -25,7 +25,7 @@ The Mecris strategic direction (`docs/ROADMAP.md`, 2025-10-19) moves from the cu
 ## Key Milestones
 
 ### Phase 1: Production Foundation (Q4 2025 — Confirmed Complete in Bundle)
-- [x] Documentation architecture (`docs/OKF_IMPROVEMENT_PLAN.md` completed; `docs/OKF_DOC_ASSESSMENT.md` rates 154 docs)
+- [x] Documentation architecture (`docs/attic/OKF_IMPROVEMENT_PLAN.md` completed and archived; `docs/OKF_DOC_ASSESSMENT.md` rates 154 docs)
 - [x] OKF bundle curated (21 concepts; `okf validate --strict --drift` clean)
 - [x] Agent bootstrap (`runbooks/agent-bootstrap.md`) — cold-start procedure documented
 - [x] Pre-commit hook (`.githooks/pre-commit`) and CI validation (`.github/workflows/ci.yml`)
@@ -76,7 +76,7 @@ The Mecris strategic direction (`docs/ROADMAP.md`, 2025-10-19) moves from the cu
 - **Knowledge Growth**: Each session adds `≤ 1` durable concept; `runbooks/agent-bootstrap.md` is the starting point; no transient concepts created for daily goal completions.
 
 ---
-*This roadmap is a living document. Updates recorded in `session_log.md` (e.g., `2026-09-06 — OKF knowledge base improvements and validation`) and `knowledge/decisions/` (`2026-09-06-cloud-easing.md`, `2026-09-06-okf-mcp-deferred.md`). For the full improvement plan that guided this bundle, see `docs/OKF_IMPROVEMENT_PLAN.md`. For the curated knowledge index, see `knowledge/index.md` and `runbooks/index.md`.*
+*This roadmap is a living document. Updates recorded in `session_log.md` (e.g., `2026-09-06 — OKF knowledge base improvements and validation`) and `knowledge/decisions/` (`2026-09-06-cloud-easing.md`, `2026-09-06-okf-mcp-deferred.md`). For the completed improvement plan that guided this bundle, see `docs/attic/OKF_IMPROVEMENT_PLAN.md`. For the curated knowledge index, see `knowledge/index.md` and `runbooks/index.md`.*
 
 ## Related Concepts
 - [Mecris System Architecture Overview](overview.md): The high-level architecture that this roadmap advances.
