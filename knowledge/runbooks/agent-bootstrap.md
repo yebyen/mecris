@@ -1,7 +1,7 @@
 ---
 type: Runbook
 title: Agent Session Bootstrap
-description: Cold-start procedure for authenticating Mecris, loading optional tools, orienting, and working safely in a PR-protected repository.
+description: Cold-start procedure for authenticating (`bin/mecris login`), loading lazy MCP families (`mecris_load_tools`), running the Gall loop (`/mecris-orient` → `/mecris-plan` → `/mecris-archive` → `/mecris-pr-test`), and working in a PR-protected repo. Includes UUID `c0a81a4b-115a-4eb6-bc2c-40908c58bf64`, `.venv` activation, `PYTHONPATH`, PocketID OAuth, `SIGINT`/`SIGTERM` handling, and pre-commit/CI validation steps.
 generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 stale_after: 2026-12-05
 sources:
@@ -12,15 +12,52 @@ sources:
   - resource: session_log.md
 ---
 
-stale_after: 2026-12-05
----
+# Agent Session Bootstrap
 
+Cold-start procedure for authenticating Mecris (`bin/mecris login`), loading optional MCP tool families (`mecris_load_tools`), orienting via the Gall loop (`/mecris-orient` → `/mecris-plan` → work → `/mecris-archive` → `/mecris-pr-test`), and working safely in a PR-protected repository (`main` branch protected; work on feature branches only).
 
-# Bootstrap
+## Prerequisites
+- `.venv` exists at `/Users/yebyen/w/mecris/.venv` (activated by `bin/mecris`).
+- `PYTHONPATH` points to project root (set by `bin/mecris` script).
+- PocketID OAuth configured (`cli/main.py`).
 
-1. Read this runbook, then search OKF for the task topic.
-2. The Mecris MCP tools require authentication. Run `bin/mecris login`; the script activates `.venv`, sets `PYTHONPATH`, and runs `python -m cli.main`. Complete the PocketID browser redirect. The login output includes the UUID used as `user_id` when required.
-3. Optional MCP families are lazy-loaded with `mecris_load_tools("budget")`, `mecris_load_tools("all")`, or the relevant capability keyword.
-4. Query `mecris_get_narrator_context` for the live situation. `bin/mecris pulse` is the CLI dashboard. There is no `get-narrator-context` CLI verb.
-5. Before coding, use the Gall loop: orient, plan, work, archive, test. Main is PR-protected; work on a branch and open a PR rather than pushing `main`.
-6. At the end, run `make okf-validate` and commit the archive state.
+## Step 1 — Read this runbook, search OKF
+```bash
+okf search "<topic>" --limit 3 --json
+```
+Returns concepts (e.g., `agent-bootstrap`, `beeminder-emergency`, `budget-extension`).
+
+## Step 2 — Authenticate
+```bash
+bin/mecris login
+```
+The `bin/mecris` script activates `.venv`, sets `PYTHONPATH`, and runs `python -m cli.main`. It launches PocketID OAuth, stores `user_id` UUID (`c0a81a4b-115a-4eb6-bc2c-40908c58bf64`), handles `SIGINT`/`SIGTERM` gracefully, and suppresses `httpx`/`urllib3` leaks.
+
+## Step 3 — Load MCP tool families (lazy-loaded)
+```python
+mecris_load_tools("budget")     # Budget Governor
+mecris_load_tools("all")         # All families
+```
+Without this, `mecris_get_narrator_context` may not be visible.
+
+## Step 4 — Query live situation
+```bash
+mecris_get_narrator_context(user_id="c0a81a4b-...")
+# or CLI dashboard:
+bin/mecris pulse
+```
+Provides budget health (`GOOD`/`WARNING`), period end (`2026-10-07`), days remaining (`31`), budget (`20.72` USD), system health.
+
+## Step 5 — Execute the Gall loop (main is PR-protected)
+Work on feature branches only (`git checkout -b feature/<name>`). The loop: `orient` → `plan` (adds `"Knowledge impact"` line) → `work` → `archive` (updates `NEXT_SESSION.md`, `session_log.md`) → `test` (CI + `okf-validate`).
+
+## Step 6 — Archive and validate
+```bash
+make okf-validate    # 21 concepts, 0 errors, 0 broken links
+```
+`.githooks/pre-commit` validates automatically. CI (`.github/workflows/ci.yml`) runs `okf validate` on every PR.
+
+## Related Concepts
+- [Agent Session Bootstrap](agent-bootstrap.md): Self-reference.
+- [System Overview](../architecture/overview.md): High-level architecture.
+- [Agent Memory Maintenance](okf-maintenance.md): Maintenance tasks.
