@@ -57,22 +57,16 @@ const STDIO_SCRIPT = process.env.MECRIS_STDIO_SCRIPT || join(MECRIS_HOME, "mcp_s
 const STDIO_ARGS = process.env.MECRIS_STDIO_ARGS?.split(" ").filter(Boolean) || ["--stdio"];
 
 /**
- * Core tools kept active at startup. py_harness ships only get_narrator_context;
- * on a large Pi model we can afford a slightly richer read-only status set while
- * still deferring the 25+ write/admin tools behind the loader.
+ * Keep only the unified narrator context active at startup. It already contains
+ * budget, Beeminder runway, daily aggregate, system pulse, and recommendations.
+ * Everything else remains available through the loader.
  *
  * Design note: we now spawn `mcp_server.py --stdio` (not `mcp_stdio_server.py`)
  * so the single process serves stdio MCP AND the HTTP bridge on :8080 for the
  * Android app. The old uvicorn port-conflict concern was valid when a separate
  * server was running, but here this IS the single canonical server.
  */
-const DEFAULT_CORE_TOOLS = [
-  "get_narrator_context",
-  "get_beeminder_status",
-  "get_budget_status",
-  "get_daily_aggregate_status",
-  "get_system_health",
-];
+const DEFAULT_CORE_TOOLS = ["get_narrator_context"];
 
 function coreToolSet(): Set<string> {
   const override = process.env.MECRIS_CORE_TOOLS;
@@ -176,6 +170,48 @@ function renderMcpContent(result: any): { text: string; isError: boolean } {
   return { text: parts.join("\n") || "(empty result)", isError };
 }
 
+function parseMcpObject(result: any): Record<string, any> {
+  if (result?.structuredContent && typeof result.structuredContent === "object") {
+    return result.structuredContent;
+  }
+  for (const item of Array.isArray(result?.content) ? result.content : []) {
+    if (item?.type === "text" && typeof item.text === "string") {
+      try {
+        return JSON.parse(item.text);
+      } catch {
+        // Try the next content item.
+      }
+    }
+  }
+  throw new Error("Mecris returned no structured status data");
+}
+
+function formatStatus(data: Record<string, any>): string {
+  if (data.error) throw new Error(String(data.error));
+  const budget = data.budget_status ?? {};
+  const runway = Array.isArray(data.goal_runway) ? data.goal_runway : [];
+  const urgentGoal =
+    runway.find((g: any) => g.derail_risk === "CRITICAL") ??
+    runway.find((g: any) => g.derail_risk === "WARNING") ??
+    runway[0];
+  const pulse = data.system_pulse ?? {};
+  const aggregate = data.daily_aggregate_status ?? {};
+  const alerts = Array.isArray(data.beeminder_alerts) ? data.beeminder_alerts : [];
+  const urgent = Array.isArray(data.urgent_items) ? data.urgent_items : [];
+  const recommendations = Array.isArray(data.recommendations) ? data.recommendations : [];
+  const next = alerts[0] ?? urgent[0] ?? recommendations[0] ?? "No immediate action.";
+
+  return [
+    `- Budget: ${budget.budget_health ?? "unknown"}; ${budget.days_remaining ?? "?"} days; ends ${budget.period_end ?? "unknown"}.`,
+    urgentGoal
+      ? `- Beeminder: ${urgentGoal.slug}; ${urgentGoal.derail_risk}; ${urgentGoal.runway ?? `${urgentGoal.safebuf ?? "?"} days`}.`
+      : "- Beeminder: no urgent goal reported.",
+    `- System: running=${pulse.running ?? "unknown"}; leader=${pulse.is_leader ?? "unknown"}; error=${pulse.last_error ?? "none"}.`,
+    `- Daily: ${aggregate.score ?? "?/?"}; ${aggregate.satisfied_count ?? aggregate.goals_met ?? "?"} satisfied.`,
+    `- Next: ${next}`,
+  ].join("\n");
+}
+
 // ---------------------------------------------------------------------------
 // Extension
 // ---------------------------------------------------------------------------
@@ -233,8 +269,19 @@ ${stderrOutput}` : errMsg };
         : `${TOOL_PREFIX}${tool.name}`;
       if (registeredTools.has(piName)) continue;
 
-      const parameters = objectToTypeBox(tool.inputSchema ?? { type: "object" });
       const upstreamName = tool.name;
+      const inputSchema = structuredClone(tool.inputSchema ?? { type: "object" }) as JsonSchema;
+      // Core read-only tools resolve identity in the Python server from the
+      // logged-in credentials file, with DEFAULT_USER_ID as a local fallback.
+      // Hiding the optional field prevents small models from deliberating over it.
+      if (
+        core.has(upstreamName) &&
+        inputSchema.properties?.user_id &&
+        !(inputSchema.required ?? []).includes("user_id")
+      ) {
+        delete inputSchema.properties.user_id;
+      }
+      const parameters = objectToTypeBox(inputSchema);
 
       pi.registerTool({
         name: piName,
@@ -355,7 +402,32 @@ ${stderrOutput}` : errMsg };
     },
   });
 
-  // /mecris — get a status update "in the normal way".
+  // /status — deterministic quick status. This bypasses the LLM entirely.
+  pi.registerCommand("status", {
+    description: "Show a concise live Mecris status without invoking the model",
+    handler: async (_args, ctx) => {
+      if (!client) {
+        ctx.ui.notify("Mecris is not connected. Try /mecris-reconnect.", "warning");
+        return;
+      }
+      try {
+        const result = await client.callTool({
+          name: "get_narrator_context",
+          arguments: {},
+        });
+        const content = formatStatus(parseMcpObject(result));
+        pi.sendMessage({
+          customType: "mecris-status",
+          content,
+          display: true,
+        });
+      } catch (err) {
+        ctx.ui.notify(`Mecris status failed: ${err}`, "error");
+      }
+    },
+  });
+
+  // /mecris — ask the model for a focused interpretation of live context.
   pi.registerCommand(STATUS_COMMAND, {
     description: "Ask Mecris for a personal accountability status update",
     handler: async (args, ctx) => {
