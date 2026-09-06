@@ -8,6 +8,7 @@ sources:
   - resource: README.md
   - resource: .mcp.json
   - resource: AGENTS.md
+  - resource: docs/ROADMAP.md
 ---
 
 # Mecris System Architecture
