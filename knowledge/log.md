@@ -1,4 +1,5 @@
 ## 2026-09-06
+* **Creation**: Documented concept `decisions/2026-09-06-deterministic-status.md` (Deterministic Pi Status and Progressive Context).
 * **Update**: Corrected `runbooks/agent-bootstrap` identity guidance: logged-in credentials are primary, `DEFAULT_USER_ID` is only a fallback, and prompts must not hardcode identities.
 * **Update**: Removed a hardcoded identity from `runbooks/beeminder-emergency` and `architecture/roadmap`.
 * **Update**: Linked `architecture/roadmap.md` to `runbooks/okf-maintenance.md` (Roadmap is maintained through OKF validation and maintenance tasks.).

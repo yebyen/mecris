@@ -3,3 +3,4 @@
 * [Cloud Easing: Local Python MCP as Primary Backend](2026-06-cloud-easing.md) - After Akamai/Fermyon deployment failures, local Python MCP became the primary interactive backend; the deployment pivot remains reversible.
 * [Defer OKF MCP Server Integration](2026-09-06-okf-mcp-deferred.md) - Keep OKF on the CLI for now: an stdio initialize smoke test succeeded but the server did not expose tools/list under the tested protocol, so .mcp.json remains unchanged.
 * [Budget Period Extension to 2026-10-07](2026-09-06-budget-extension.md) - Extended Mecris budget period from 2026-08-06 to 2026-10-07 via mecris_update_budget MCP tool, restoring 31 days of remaining budget and clearing warnings.
+* [Deterministic Pi Status and Progressive Context](2026-09-06-deterministic-status.md) - Make /status a native Pi command that bypasses the LLM, exposes only narrator context by default, infers identity from login credentials, and keeps OKF guidance out of always-on context.
