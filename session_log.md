@@ -475,4 +475,6 @@ OKF Knowledge Base Setup Complete - 2026-09-06: Initialized OKF v0.2 bundle, cre
 
 **Validation**: `okf validate knowledge --strict --drift` and `make okf-validate` both passed with 18 concepts, 0 errors, 0 warnings, 0 broken links, and 0 orphans.
 
-**Next**: Commit this archive state, push `okf/knowledge-improvement`, open a PR, and verify the required CI workflow including OKF validation.
+**Next**: PR [#294](https://github.com/kingdonb/mecris/pull/294) is open. Verify its required CI workflow, including OKF validation, then use a real `/mecris-orient` run to measure bootstrap efficiency.
+
+**Archive completion**: Committed as `1aae09ec`, pushed branch `okf/knowledge-improvement`, and opened PR #294. At archive time, **Run Complete Test Suite** was pending.
