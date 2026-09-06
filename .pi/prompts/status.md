@@ -1,8 +1,15 @@
 ---
-description: Minimal status update — budget, beeminder alert, system pulse, action. References .github/skills/mecris-status/SKILL.md.
+description: Quick 3-step status — resolve UUID automatically, query live state, report 5 bullets. Never ask user for user_id.
 ---
-Run the minimal status update before deciding what to do:
+Resolve UUID automatically (from `.env` `DEFAULT_USER_ID`, `.mcp.json` `MECRIS_USER_ID`, or `bin/mecris login` output: `c0a81a4b-115a-4eb6-bc2c-40908c58bf64` for user `yebyen`).
 
-1. Auto-resolve `user_id` (see `.github/skills/mecris-orient/SKILL.md`: never ask; use UUID `c0a81a4b-115a-4eb6-bc2c-40908c58bf64` from `bin/mecris login`, `.env`, or session).
-2. Call `mecris_get_narrator_context(user_id=user_id)`.
-3. Report (≤5 bullets): Budget health + days remaining + period_end; Beeminder alert (`derail_risk`, `safebuf`, `deadline`); System pulse (`running`, `is_leader`, `last_error`); Daily aggregate (`X/Y`); Next `IMMEDIATE` action (`recommendations` array, `runbooks/beeminder-emergency.md` for emergency).
+Call `mecris_get_narrator_context(user_id=user_id)` once.
+
+Report exactly 5 bullets (≤2 lines each, no extra reasoning):
+1. Budget: health + days left + period_end (e.g., GOOD / 31 / 2026-10-07)
+2. Beeminder: alert slug + derail_risk + safebuf + deadline (e.g., reviewstack / WARNING / 1 / 2026-09-07)
+3. System pulse: running + is_leader + last_error (e.g., running: true / is_leader: false / last_error: null)
+4. Daily aggregate: X/Y score + satisfied count (e.g., 0/3 — walk false, arabic false, greek false / laminar + cavitation)
+5. Next IMMEDIATE action: from recommendations array (e.g., "Submit/review reviewstack data — derails tomorrow" / "Confirm PR #296 passes CI" / "Walk needed: bike goal false")
+
+No Prior Knowledge section. No commit log. No OKF search. No issue fetch. Brief only.

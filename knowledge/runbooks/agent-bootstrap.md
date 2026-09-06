@@ -27,6 +27,22 @@ okf search "<topic>" --limit 3 --json
 ```
 Returns concepts (e.g., `agent-bootstrap`, `beeminder-emergency`, `budget-extension`).
 
+## Environment Variable Fix (Critical for Auto-Resolution)
+The `.env` file must include the user UUID so the MCP server (`mcp_server.py`) resolves it automatically without requiring the agent to ask the user:
+```bash
+DEFAULT_USER_ID=c0a81a4b-115a-4eb6-bc2c-40908c58bf64
+MECRIS_USER_ID=c0a81a4b-115a-4eb6-bc2c-40908c58bf64
+```
+The `.mcp.json` `mecris` server environment must also include these variables so the stdio MCP process receives them (`python-dotenv` loads `.env`, but `.mcp.json` overrides/pass-through ensures the server process sees them):
+```json
+"env": {
+  "PYTHONPATH": "/Users/yebyen/w/mecris",
+  "DEFAULT_USER_ID": "c0a81a4b-115a-4eb6-bc2c-40908c58bf64",
+  "MECRIS_USER_ID": "c0a81a4b-115a-4eb6-bc2c-40908c58bf64"
+}
+```
+Without this fix, the agent (e.g., Qwen AgentWorld via Pi harness) will ask the user for `user_id` or get lost during `/mecris-orient` or `/status`. This is documented in `decisions/2026-09-06-okf-mcp-deferred.md` (Phase 5 deferred; embedded `.mcp.json` option preferred over separate server to avoid chooser overload).
+
 ## Step 2 — Authenticate
 ```bash
 bin/mecris login
