@@ -66,3 +66,7 @@ Runs the full orientation workflow autonomously:
 - The recommended action is a suggestion; the caller decides whether to act
 - In bot context, the recommended action feeds directly into `/mecris-plan`
 - In human context, the report is presented for review before proceeding
+
+## Identity
+
+Mecris read-only tools normally infer the current user from the credentials written by `bin/mecris login`. Call them without `user_id`. If a tool returns `Authentication Required`, ask the user to run `bin/mecris login`; do not search for, guess, or expose an identifier.

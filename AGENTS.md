@@ -1,136 +1,32 @@
-# Mecris Agent Skills
+# Mecris Agent Guide
 
-Reusable AI agent skills for the Mecris personal accountability system.
-Four skills, one loop, modeled on the Urbit Gall agent pattern.
+Mecris is a personal accountability system. The Pi extension exposes its Python backend as native tools.
 
-## Skills
+## Always-on rules
 
-The Mecris agent framework is supported by a rich library of specialized skills that provide procedural guidance, automate repetitive tasks, and embed architectural knowledge directly into the agent's context.
+- `main` is PR-protected. Work on a feature branch and merge through a passing PR.
+- Use `/status` for a quick live report. It is a deterministic extension command and does not invoke the model.
+- Use `/mecris-orient` for full project orientation, `/mecris-plan` before substantial work, `/mecris-archive` when finishing, and `/mecris-pr-test` for PR validation.
+- Core Mecris tools are active at startup; load other capabilities with `mecris_load_tools("<capability>")`.
+- Mecris tools normally infer the current user from the logged-in credentials. Do not supply `user_id` unless deliberately operating on another account.
 
-### The Gall Loop Skills
-Modeled on the Urbit Gall agent pattern, these four skills orchestrate the core development loop:
+## Progressive project knowledge
 
-| Skill | Role | Gall arm |
-|---|---|---|
-| `/mecris-orient` | Read-only situation report. The battery. | `on-peek` |
-| `/mecris-plan` | Write a spec issue before acting. | `on-poke` |
-| `/mecris-archive` | Serialize state after work is done. | `on-save` |
-| `/mecris-pr-test` | Dispatch and poll the test pipeline. | `on-agent` |
+Durable project knowledge lives in the OKF bundle under `knowledge/`. Load the `okf-agent-memory` skill only when a task needs architectural history, durable decisions, runbooks, or knowledge maintenance.
 
-### Specialized Technical Skills
-In addition to the core loop, Mecris agents have access to a suite of highly specialized technical and operational skills (provided via the integrated `kingdon-skills` repository). Trigger these using the `/` command prefix in your requests:
+Useful commands:
 
-*   **/author-skills**: Expert procedural guidance on writing new agent skills using the standard `SKILL.md` format.
-*   **/follow-leader**: Evaluates autonomous releases from `mecris-bot` and manages the canary vs. legacy-cloud version tracks.
-*   **/sdd**: Guides the user and agent through Spec-Driven Development (SDD) methodology using GitHub's Spec-Kit.
-*   **/atomic**: Helps create clean, atomic commits by analyzing changes and detecting mixed concerns.
-*   **/tdg**: Utilizes Test-Driven Generation (TDG) techniques for Red-Green-Refactor development loops.
-*   **/ticket-author**: Authors standard-format work tickets (Jira/GitHub/GitLab) with Business Value and Requirements sections.
-*   **/postmortem-author**: Generates Sunkworks-style post-mortem reports with timeline reconstruction and failure pattern recognition.
-*   **/start-blasting**: Pragmatic task execution for high-volume, mundane tasks (scripting vs. LLM brute-force).
-*   **/hallucination-detector**: Traces claims back to source materials to validate factual assertions.
-*   **/sos-emergency**: Emergency recovery procedures for Kubernetes, Talos, and Graceful Shutdowns.
-
-**Infrastructure & Observability Skills:**
-*   `/prometheus-status`, `/alertmanager-install`, `/pihole-status`, `/vind-status`, `/flux-status`, `/kubeconfig-setup`, `/crossplane-surgery`, `/github-mcp`, `/template-generate`, `/ksm-crossplane`.
-
-## Install
-
-### Claude Code plugin
-
-```shell
-/plugin marketplace add kingdonb/mecris
-/plugin install mecris-skills@mecris
+```bash
+okf search "<topic>" knowledge --limit=3 --json
+okf show <concept-id> knowledge
+make okf-validate
 ```
 
-### Using oras
+Do not run an OKF workflow for `/status`.
 
-```shell
-oras pull ghcr.io/kingdonb/mecris/skills:latest
-```
+## Source references
 
-### Manual
-
-Copy `.github/skills/` into your project's `.claude/skills/` directory.
-
-## The Loop
-
-```
-/mecris-orient   → situation report + recommended action
-/mecris-plan     → open a spec issue (intent, because, validation)
-[do the work]
-/mecris-archive  → close spec, update NEXT_SESSION.md, append SESSION_LOG
-/mecris-pr-test  → dispatch and poll the test pipeline for validation
-```
-
-## Integrated MCP Tools
-
-Mecris extends the agent's capabilities with over 50 distinct MCP (Model Context Protocol) tools, bridging the gap between natural language and the underlying infrastructure, databases, and third-party APIs.
-
-### Mecris Core Context & Accountability Tools
-*   **Strategic Context**: `mcp_mecris_get_narrator_context`, `mcp_mecris_get_system_health`, `mcp_mecris_get_coaching_insight`
-*   **Goal Mastery (Beeminder)**: `mcp_mecris_get_beeminder_status`, `mcp_mecris_get_daily_activity`, `mcp_mecris_send_beeminder_alert`, `mcp_mecris_get_daily_aggregate_status`, `mcp_mecris_add_goal`, `mcp_mecris_complete_goal`
-*   **Language Learning**: `mcp_mecris_get_language_velocity_stats`, `mcp_mecris_set_review_pump_lever`, `mcp_mecris_trigger_language_sync`
-*   **Budget & Usage**: `mcp_mecris_get_budget_status`, `mcp_mecris_get_unified_cost_status`, `mcp_mecris_get_budget_governor_status`, `mcp_mecris_get_recent_usage`, `mcp_mecris_record_usage_session`, `mcp_mecris_get_real_anthropic_usage`, `mcp_mecris_record_groq_reading`, `mcp_mecris_get_groq_status`
-*   **Scheduling & Comms**: `mcp_mecris_get_scheduler_queue`, `mcp_mecris_enqueue_message`, `mcp_mecris_trigger_reminder_check`, `mcp_mecris_set_notification_prefs`
-*   **Knowledge Retrieval**: `mcp_mecris_ask_mecris`, `mcp_mecris_search_bookmarks`, `mcp_mecris_get_bookmarks_by_topic`, `mcp_mecris_get_weather_report`
-*   **Data Portability (GDPR)**: `mcp_mecris_export_user_data`, `mcp_mecris_delete_user_data`
-
-### GitHub Integration Tools
-The environment automatically provides full GitHub repository access via the GitHub MCP server:
-*   **Code & Files**: `mcp_github_get_file_contents`, `mcp_github_create_or_update_file`, `mcp_github_push_files`, `mcp_github_search_code`
-*   **Issues**: `mcp_github_list_issues`, `mcp_github_get_issue`, `mcp_github_create_issue`, `mcp_github_update_issue`, `mcp_github_add_issue_comment`, `mcp_github_search_issues`
-*   **Pull Requests**: `mcp_github_list_pull_requests`, `mcp_github_get_pull_request`, `mcp_github_create_pull_request`, `mcp_github_get_pull_request_files`, `mcp_github_create_pull_request_review`, `mcp_github_merge_pull_request`, `mcp_github_get_pull_request_status`, `mcp_github_update_pull_request_branch`
-*   **Git Ops**: `mcp_github_create_branch`, `mcp_github_list_commits`, `mcp_github_search_repositories`, `mcp_github_fork_repository`, `mcp_github_search_users`
-
-## Update
-
-```shell
-/plugin update mecris-skills@mecris
-```
-
-Or pull the latest OCI artifact:
-
-```shell
-oras pull ghcr.io/kingdonb/mecris/skills:latest
-```
-
-<!-- BEGIN OKF AGENT MEMORY -->
----
-
-## 🧠 Persistent Project Memory (OKF v0.2)
-
-> Powered by [OKF Agent Memory](https://github.com/okf-memory/okf-agent-memory) — Open Knowledge Format (OKF) v0.2 persistent project memory for AI agents.
-
-When working in this codebase, you must follow the memory conventions:
-
-1. **Persistent Knowledge Lives in `knowledge/`**:
-   - The `knowledge/` directory is an **Open Knowledge Format (OKF) v0.2** bundle.
-   - Store durable facts, architectural decisions, and project findings in `knowledge/`. Never store transient conversational noise.
-
-2. **Read Before Write (Search Before Create)**:
-   - Before authoring new knowledge or code, query existing memory: `okf search "<query>"` or inspect `knowledge/index.md`.
-   - Update existing concepts instead of creating duplicates.
-
-3. **Strict Context & Search-First Retrieval (No Blanket Scans)**:
-   - **DO NOT** use `list_dir`, `grep`, or scan `knowledge/` in bulk.
-   - Query knowledge via `okf search "<query>" --limit 3 --json` only when relevant or requested.
-   - Inspect concept descriptions first and load full concepts only on demand using `okf show <id>`.
-
-4. **Preserve Trust & Provenance**:
-   - Agent writes declare `generated: { by: "<agent>", at: "<timestamp>" }`. Never forge human verification (`verified:`).
-
-5. **Essential Memory Commands**:
-   - `okf show runbooks/agent-bootstrap knowledge` — **Read first at each session start**; it provides the authenticated Mecris cold-start procedure.
-   - `okf search "<query>"` — Query memory using in-memory BM25
-   - `okf show <id>` — Inspect concept details and relationship graph
-   - `okf create <id> --type <type> --title "<title>" --desc "<desc>"` — Document new fact
-   - `okf update <id> --desc "<updated-desc>"` — Modify existing concept
-   - `okf relate <src> <tgt> --desc "<rel>"` — Link concepts together
-   - `okf validate knowledge --strict --drift` — Verify 100% OKF v0.2 conformance
-
-6. **End-of-Task Review Checklist**:
-   - Did I make an architectural decision? -> Record under `knowledge/architecture/`
-   - Did I add/update concepts? -> Ensure `knowledge/log.md` and parent `index.md` are updated.
-   - Did I validate? -> Ensure 0 errors, 0 broken links (`okf validate knowledge --strict`).
-<!-- END OKF AGENT MEMORY -->
+- Pi bridge: `.pi/extensions/mecris/README.md`
+- Gall workflow definitions: `.github/skills/mecris-*/SKILL.md`
+- Cold start and identity fallback: `knowledge/runbooks/agent-bootstrap.md`
+- Full project documentation: `README.md` and `docs/`

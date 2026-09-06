@@ -1,4 +1,16 @@
 ## 2026-09-06
+* **Update**: Added immediate Pi footer feedback while deterministic `/status` gathers live narrator context.
+* **Creation**: Documented concept `decisions/2026-09-06-deterministic-status.md` (Deterministic Pi Status and Progressive Context).
+* **Update**: Corrected `runbooks/agent-bootstrap` identity guidance: logged-in credentials are primary, `DEFAULT_USER_ID` is only a fallback, and prompts must not hardcode identities.
+* **Update**: Removed a hardcoded identity from `runbooks/beeminder-emergency` and `architecture/roadmap`.
+* **Update**: Linked `architecture/roadmap.md` to `runbooks/okf-maintenance.md` (Roadmap is maintained through OKF validation and maintenance tasks.).
+* **Update**: Updated concept `architecture/roadmap.md`.
+* **Update**: Linked `architecture/roadmap.md` to `architecture/edge-and-clients.md` (Milestones include mobile (Android), Spin/WASM, and Akamai cloud deployment.).
+* **Update**: Updated concept `architecture/roadmap.md`.
+* **Update**: Linked `architecture/roadmap.md` to `architecture/philosophy.md` (Strategic milestones align with design principles.).
+* **Update**: Updated concept `architecture/roadmap.md`.
+* **Update**: Linked `architecture/roadmap.md` to `architecture/overview.md` (Roadmap advances the system architecture toward SMS vision and autonomous operation.).
+* **Update**: Updated concept `architecture/roadmap.md`.
 * **Update**: Linked `runbooks/okf-maintenance.md` to `runbooks/beeminder-emergency.md` (Both runbooks address urgent situations: maintenance vs. emergency goal response.).
 * **Update**: Updated concept `runbooks/okf-maintenance.md`.
 * **Update**: Linked `runbooks/okf-maintenance.md` to `runbooks/agent-bootstrap.md` (Maintenance runbook is consulted periodically after bootstrapping a session.).

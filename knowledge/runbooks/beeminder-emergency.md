@@ -2,7 +2,7 @@
 type: Runbook
 title: Beeminder Emergency Response
 description: Procedure for interpreting live goal risk (derail_risk, safebuf, deadline), selecting the smallest valid action before derailment, and recording durable discoveries per Beeminder's Midnight Mandate.
-generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
+generated: { by: agent/gpt-5.6-sol, at: 2026-09-06T23:07:26Z }
 stale_after: 2026-12-05
 sources:
   - resource: docs/BEEMINDER_ASYNC_LORE.md
@@ -20,7 +20,8 @@ When a Beeminder goal hits `derail_risk` of `CRITICAL` or `WARNING`, or `safebuf
 Query the Beeminder client directly:
 ```python
 from beeminder_client import BeeminderClient
-client = BeeminderClient(user_id="c0a81a4b-115a-4eb6-bc2c-40908c58bf64")
+from services.credentials_manager import credentials_manager
+client = BeeminderClient(user_id=credentials_manager.resolve_user_id())
 status = await client.get_goal_status("bike")  # or any slug
 ```
 The `BeeminderGoal` data structure (`beeminder_client.py`) provides:

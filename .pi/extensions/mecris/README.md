@@ -21,10 +21,9 @@ pi -e ./.pi/extensions/mecris/index.ts
 
 ## Use
 
-- Ask for a status update in the normal way, e.g. *"what's my Mecris status?"* — the model
-  calls `mecris_get_narrator_context`.
-- `/mecris [focus]` — one-shot status update command.
-- `/mecris-reconnect` — restart the MCP bridge without a full `/reload`.
+- `/status` — deterministic five-line live status. Immediately shows `Fetching Mecris status…`, calls `get_narrator_context` directly, and does not invoke the model.
+- `/mecris [focus]` — ask the model for a focused interpretation of live context.
+- `/mecris-reconnect` — restart the bridge without a full `/reload`.
 - Non-core tools are deferred; the model activates them via `mecris_load_tools`.
 
 ## Config (env vars)
@@ -33,12 +32,13 @@ pi -e ./.pi/extensions/mecris/index.ts
 |---|---|---|
 | `MECRIS_HOME` | repo root (3 levels up) | Mecris checkout location |
 | `MECRIS_PYTHON` | `<home>/.venv/bin/python` | Python interpreter |
-| `MECRIS_STDIO_SCRIPT` | `<home>/mcp_stdio_server.py` | stdio entrypoint (no port-8080 bridge) |
-| `MECRIS_CORE_TOOLS` | 5 read-only status tools | comma-separated active-at-startup set |
+| `MECRIS_STDIO_SCRIPT` | `<home>/mcp_server.py` | canonical stdio entrypoint |
+| `MECRIS_CORE_TOOLS` | `get_narrator_context` | comma-separated active-at-startup set |
 
-## Why `mcp_stdio_server.py` and not `mcp_server.py --stdio`
+## Identity resolution
 
-The other harness configs launch `mcp_server.py --stdio`, which also binds the FastAPI
-Android bridge on `0.0.0.0:8080`. Two of those at once hard-fail on the port. This bridge
-follows the native `py_harness` and uses `mcp_stdio_server.py` (scheduler + stdio only), so
-it coexists with any other running harness.
+The Python backend resolves the current user from `~/.mecris/credentials.json`, written by `bin/mecris login`. `DEFAULT_USER_ID` is an optional standalone fallback. Core read-only Pi tools hide the optional `user_id` field; callers normally use `{}`.
+
+## Workflow prompts
+
+Project prompts expose the Gall workflow: `/mecris-orient`, `/mecris-plan`, `/mecris-archive`, and `/mecris-pr-test`. Their canonical definitions live under `.github/skills/`.

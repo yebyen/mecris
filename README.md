@@ -32,8 +32,9 @@ cd .pi/extensions/mecris && npm install && cd ../../..
 # Launch Pi with Mecris bridge
 pi  # Or: pi --provider groq --model llama-3.1-70b-versatile
 
-# In the chat, ask for a status update
-> What's my Mecris status?
+# In Pi:
+/status          # deterministic five-line report; no model tokens
+/mecris          # richer model-interpreted status
 ```
 
 See [docs/PI_MECRIS_GUIDE.md](docs/PI_MECRIS_GUIDE.md) for detailed configuration, lazy-loading, and troubleshooting.
@@ -42,9 +43,9 @@ See [docs/PI_MECRIS_GUIDE.md](docs/PI_MECRIS_GUIDE.md) for detailed configuratio
 For detailed setup instructions for different agents, see [docs/SETUP_GUIDE.md](docs/SETUP_GUIDE.md).
 
 ```bash
-# 1. Install dependencies (bin/mecris activates .venv automatically)
-uv venv  # .venv created automatically by bin/mecris script
-bin/mecris login  # Self-activates .venv, sets PYTHONPATH, launches auth
+# 1. Install dependencies, then authenticate
+uv sync           # creates/synchronizes .venv
+bin/mecris login  # activates .venv, sets PYTHONPATH, launches auth
 
 # 2. Configure environment (copy and edit .env.example if needed)
 # Set BEEMINDER_USERNAME, BEEMINDER_AUTH_TOKEN, TWILIO credentials, etc.
