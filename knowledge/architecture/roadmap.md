@@ -1,7 +1,7 @@
 ---
 type: Architecture
 title: Mecris Strategic Roadmap
-generated: { by: agent/cli, at: 2026-09-06T21:40:25Z }
+generated: { by: agent/gpt-5.6-sol, at: 2026-09-06T23:07:26Z }
 sources:
   - resource: docs/ROADMAP.md
   - resource: docs/ARCHITECTURE.md
@@ -61,7 +61,7 @@ The Mecris strategic direction (`docs/ROADMAP.md`, 2025-10-19) moves from the cu
 - **Security** (`docs/AUTH_CONFIGURATION.md`, `.githooks/pre-commit`): PocketID v2.13; `.githooks/pre-commit` validates bundle; CI (`.github/workflows/ci.yml`) runs `okf validate`.
 
 ## Key Integration Points
-- **Agent Bootstrap** (`runbooks/agent-bootstrap.md`): Cold-start procedure (`bin/mecris login` → `.venv` activation → `PYTHONPATH` → PocketID redirect → `user_id` UUID `c0a81a4b-115a-4eb6-bc2c-40908c58bf64`).
+- **Agent Bootstrap** (`runbooks/agent-bootstrap.md`): Cold-start procedure (`bin/mecris login` → `.venv` activation → `PYTHONPATH` → PocketID authentication).
 - **Gall Loop** (`architecture/gall-loop.md`): `orient` → `plan` → `work` → `archive` → `test`. Each skill (`.github/skills/`) references OKF (`runbooks/agent-bootstrap.md`, `runbooks/okf-maintenance.md`).
 - **Knowledge Impact Tracking** (`.github/skills/mecris-plan/SKILL.md`, `AGENTS.md`): Spec issues include `"Knowledge impact"` line naming OKF concepts updated (`runbooks/agent-bootstrap.md`, `runbooks/okf-maintenance.md`).
 - **Archive Validation** (`.github/skills/mecris-archive/SKILL.md`, `runbooks/okf-maintenance.md`): End-of-task checklist runs `make okf-validate`; `session_log.md` logs delta; `NEXT_SESSION.md` updates state.
