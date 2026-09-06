@@ -1,7 +1,7 @@
 ---
 description: Quick 3-step status — resolve UUID automatically, query live state, report 5 bullets. Never ask user for user_id.
 ---
-NO FULL OKF WORKFLOW — skip contract rules (search-before-write, provenance, strict retrieval); quick check only. Resolve UUID automatically (from `.env` `DEFAULT_USER_ID`, `.mcp.json` `MECRIS_USER_ID`, or `bin/mecris login` output: `auto-resolved from session/auth` for user `yebyen`).
+Quick check: resolve UUID automatically (from session/auth), query live state, report 5 bullets. Skip full orientation workflow. (from `.env` `DEFAULT_USER_ID`, `.mcp.json` `MECRIS_USER_ID`, or `bin/mecris login` output: `auto-resolved from session/auth` for user `yebyen`).
 
 Call `mecris_get_narrator_context(user_id=user_id)` once.
 
