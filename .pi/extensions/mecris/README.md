@@ -42,3 +42,7 @@ The other harness configs launch `mcp_server.py --stdio`, which also binds the F
 Android bridge on `0.0.0.0:8080`. Two of those at once hard-fail on the port. This bridge
 follows the native `py_harness` and uses `mcp_stdio_server.py` (scheduler + stdio only), so
 it coexists with any other running harness.
+
+
+## Skill References
+The `.github/skills/mecris-orient/`, `.github/skills/mecris-plan/`, `.github/skills/mecris-archive/`, and `.github/skills/mecris-pr-test/` skills are available to the harness. The `mecris-orient` skill requires automatic `user_id` resolution (see `.github/skills/mecris-orient/SKILL.md`).
