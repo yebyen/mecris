@@ -44,7 +44,6 @@ Run this runbook regularly (e.g., weekly or after a series of changes) to ensure
 - The CI workflow (`.github/workflows/ci.yml`) installs the OKF CLI and runs validation on every push to a PR and on pushes to `main`.
 
 ## Related Concepts
-## Related Concepts
 - [Agent Session Bootstrap](../runbooks/agent-bootstrap.md): The starting point for any agent session.
 - [System Overview](../architecture/overview.md): The high‑level architecture that this knowledge base supports.
 - [Beeminder Emergency Response](../runbooks/beeminder-emergency.md): Both runbooks address urgent situations: maintenance vs. emergency goal response.
