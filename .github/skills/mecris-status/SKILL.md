@@ -15,7 +15,7 @@ Minimal orientation for quick status checks. Does NOT run the full Gall loop or 
 ### 1. Auto-resolve `user_id`
 Resolve `user_id` from session/auth automatically (same rule as `/mecris-orient`):
 ```python
-user_id = "c0a81a4b-115a-4eb6-bc2c-40908c58bf64"  # yebyen; resolved from bin/mecris login / session / .env
+user_id = "auto-resolved from session"  # yebyen; resolved from bin/mecris login / session / .env
 ```
 Never ask the user. The UUID is persistent for this user.
 
