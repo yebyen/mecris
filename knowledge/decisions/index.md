@@ -1,0 +1,2 @@
+# Decisions
+* [Critical Situation: Budget Expired, Walk Needed, Reviewstack Derailing Tomorrow](2026-09-06-critical-situation.md) - On 2026-09-06, the Mecris system shows: budget period ended 31 days ago, MCP server offline for 2.5 hours, no walk today, and reviewstack goal derailing tomorrow. Immediate actions needed: address budget period, take a walk, and do Arabic review to prevent derailment.
