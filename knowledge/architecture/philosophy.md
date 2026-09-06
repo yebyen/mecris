@@ -5,6 +5,7 @@ description: Mecris uses a memorable forest/iron metaphor for a local-first acco
 generated: { by: agent/claude-fable-5.1, at: 2026-09-06T17:30:00Z }
 sources:
   - resource: ARCHITECTURE.md
+  - resource: docs/architectural_evolution/01_the_bootstrap_era.md
 ---
 
 # The Diseased Forest
