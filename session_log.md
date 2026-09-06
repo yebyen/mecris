@@ -491,3 +491,12 @@ OKF Knowledge Base Setup Complete - 2026-09-06: Initialized OKF v0.2 bundle, cre
 
 **Next**: Await PR #294 merge into main, then use the updated OKF bundle in future sessions for orientation and knowledge impact tracking.
 
+
+## 2026-09-06 — OKF knowledge base PR merged into main
+
+**Planned**: After CI passes, merge the OKF knowledge-improvement PR into main.
+
+**Done**: PR #294 merged via gh CLI. The bundle now contains 21 curated concepts with proper metadata, sources, and relationships. Validation passes with 0 errors, 0 warnings, 0 broken links, 0 orphans.
+
+**Next**: Use the improved OKF bundle in future sessions for orientation, knowledge impact tracking, and maintenance via the pre‑commit hook and CI.
+
