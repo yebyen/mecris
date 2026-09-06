@@ -270,3 +270,196 @@ curl -s http://127.0.0.1:8080/health
 - [ ] Add structured logging to HTTP thread (file + stdout)
 - [ ] Consider systemd/service management for headless deployments
 - [ ] Document COZYBEBY operational model in `docs/COZYBEBY.md`
+# OKF Memory Architecture: Persistent Markdown as External Cortex
+
+**Date:** 2026-09-06  
+**Context:** Architectural discussion following narrator context review  
+
+---
+
+## Executive Thesis
+
+Persistent markdown storage (OKF) transforms the agent from a stateless chatbot into a **distributed research assistant with long-term recall**. The key insight: memory isn't about remembering everything; it's about encoding high-value context in human-readable, versioned, editable form. OKF provides deterministic, auditable memory that bridges the gap between LLM "context" and human knowledge management—critical for accountability systems like Mecris.
+
+---
+
+## Core Strategies
+
+### 1. Working Memory Buffer (Decisions & Conventions)
+Every non-trivial decision gets encoded in a dedicated markdown file:
+- **Architecture choices**: "We chose event sourcing over CQRS because..."
+- **Naming conventions**: "All DTOs use PascalCase; all domain entities use snake_case"
+- **Design patterns**: "Backpressure handling uses X pattern across all streaming endpoints"
+
+**Format:**
+```markdown
+# Decision: [Title]
+**Date:** 2026-09-06  
+**Rationale:** [Why we chose this]  
+**Alternatives Considered:** [Brief list with rejection reasons]  
+**Related Files:** [`path/to/file1.md`](./file1.md)
+```
+
+This prevents the "why did we do that?" tax and keeps me aligned across sessions without relying on fragile session memory.
+
+### 2. Project Context Cache (Single Source of Truth)
+A single markdown file lives at the repo root:
+- Tech stack & versions
+- Key constraints (e.g., "no external DBs", "all data in SQLite")
+- Coding standards ("no `var` in Go", "always use explicit error handling")
+- Active goals & priorities
+
+**Usage pattern:**
+1. Before major work → read context file
+2. After significant changes → update context file
+3. During sessions → I reference it implicitly via compaction summaries
+
+This means my next turn is already primed with the right assumptions, eliminating repetitive "what's our stack?" exchanges.
+
+### 3. Session Log Palace (Historical Continuity)
+Structured markdown per project tracking:
+- What we built
+- When it was built
+- Why it was built this way
+
+**Format:**
+```markdown
+# Project X Session Log
+**Date:** 2026-09-06  
+**Focus:** [High-level summary]  
+**Completed:** 
+- [x] Implemented backpressure handling for streaming endpoints
+- [x] Wrote unit tests covering edge cases in `stream_processor.py`  
+**Open:** 
+- [ ] Add metrics export to Prometheus  
+**Key Context Needed:** User mentions "Prometheus" but hasn't specified format preferences yet.
+```
+
+This is my external memory palace. When I need to recall something from 20 sessions ago, I query the logs instead of hallucinating or guessing.
+
+### 4. Pattern Capture Library (Canonical Solutions)
+Whenever we solve a non-trivial problem, I write a canonical note:
+- Problem statement
+- Solution (with code snippets)
+- Rationale & trade-offs
+- Links to related notes/files
+
+**Example:** "How to handle backpressure in our streaming pipeline" → becomes a reusable playbook entry. Over time this transforms OKF from passive storage into an active knowledge base that I can reference without you repeating yourself.
+
+### 5. Accountability Ledger (Progress Tracking)
+For goals like language learning or daily tasks, I maintain progress notes tied to dates and metrics:
+```markdown
+# Greek Vocabulary Progress
+**Date Range:** 2026-09-01 to 2026-09-06  
+**Cards Reviewed:** 487  
+**New Cards Added:** 12  
+**Average Daily:** ~94 cards/day  
+**Notes:** Future reviews are thinning; need to play new cards soon.
+```
+
+This turns OKF into a living journal that feeds back into my planning suggestions and keeps me accountable to your goals.
+
+---
+
+## Integration with Pi's Compaction System
+
+OKF doesn't replace Pi's built-in compaction; it **augments** it:
+
+| Mechanism | Purpose | How OKF Complements It |
+|-----------|---------|------------------------|
+| **Pi Auto-Compaction** | Summarize session messages when context exceeds threshold | OKF stores the summarized content in persistent markdown, not just in-memory entries |
+| **Branch Summarization** | Preserve context when switching branches | OKF provides a stable "previous work" file that survives branch changes |
+| **Tool-Driven Memory** | `read()`, `edit()`, `bash()` operations tracked cumulatively | OKF becomes the destination for high-level summaries of those operations |
+
+**The workflow:**
+1. Session grows large → Pi triggers compaction
+2. I generate a structured summary (using the format above)
+3. Summary gets written to OKF via `edit()` or a custom MCP tool
+4. Next session loads OKF + recent messages → continuity without bloating context
+
+This means OKF survives session boundaries, version control changes, and even hardware failures. It's not just "memory"; it's **knowledge infrastructure**.
+
+---
+
+## Why Markdown? (Not Vector DBs or JSON)
+
+You might wonder: why not a modern vector store or binary format? Here's the pragmatic breakdown:
+
+| Criterion | Markdown (OKF) | Vector DB | JSON/SQLite |
+|-----------|----------------|-----------|-------------|
+| **Readability** | Human-readable out of the box | Binary blobs, require tools | Structured but opaque |
+| **Version Control** | Git-ready with diff-friendly changes | Requires custom schema/versioning | Good, but less semantic |
+| **Search** | Built-in text search + grep | Semantic similarity (overkill for now) | SQL queries (fine, but verbose) |
+| **Latency** | Instant file I/O | Network calls, indexing overhead | Fast, but connection pooling needed |
+| **Cost** | Zero (local filesystem) | Cloud hosting, maintenance | Minimal, but infrastructure needed |
+
+For a personal accountability system like Mecris, markdown wins because:
+1. **You can audit it**: You'll read these notes months later; they should make sense without tools.
+2. **You can edit it**: If I misremember something or you want to add context, you do it directly in the repo.
+3. **It scales gracefully**: 100 markdown files is as easy to manage as 100 database tables.
+
+---
+
+## Implementation Roadmap (Minimal Viable OKF)
+
+If we move forward with this architecture, here's what I'd actually build:
+
+### Phase 1: Manual Integration (Week 1)
+- You create a `docs/okf/` directory in the repo
+- I use standard markdown files for notes, decisions, and session logs
+- No automation yet—just disciplined writing during sessions
+
+### Phase 2: Simple MCP Tools (Week 2)
+```typescript
+// .pi/extensions/mecris/index.ts additions
+
+// Read a note by slug/path
+await read(path="docs/okf/decisions/BACKPRESSURE_HANDLING.md");
+
+// Write/update a note with structured metadata
+await edit({
+  path: "docs/okf/decisions/BACKPRESSURE_HANDLING.md",
+  edits: [{
+    oldText: "---\n",
+    newText: "---\ntitle: Backpressure Handling Pattern\nslug: decisions/backpressure_handling\ndate: 2026-09-06\n---\n"
+  }]
+});
+
+// List all notes in a directory (for planning)
+await bash("ls -1 docs/okf/", { limit: 50 });
+```
+
+### Phase 3: Semantic Search (Phase 4+)
+Only when note volume justifies it. Options:
+- **LanceDB**: Local, fast, embeds with `all-MiniLM-L6-v2`
+- **Chroma**: Similar, but more cloud-oriented
+- **Just grep + ripgrep**: Often sufficient for markdown wikis
+
+---
+
+## Key Learnings & Principles
+
+1. **Memory is about encoding, not storing**: The value isn't in the bytes; it's in how well they capture intent, rationale, and context.
+2. **Human-readable > Human-proof**: I'll forget things; you won't (or should be able to). Design for your future self.
+3. **Version control is your friend**: Every note has a history. You can see when decisions changed and why.
+4. **OKF complements, doesn't replace**: Pi's compaction handles session continuity; OKF handles long-term knowledge. They work together.
+5. **Start small, iterate fast**: A single well-maintained decision file is worth more than 100 half-baked notes in a vector store you never query.
+
+---
+
+## Final Thought
+
+The goal isn't to build the "perfect" memory system. It's to create a workflow where:
+- Decisions are captured immediately (no "I thought we agreed on X...")
+- Context is always accessible (no re-explaining)
+- Progress is measurable (no "how far along are we?")
+- Knowledge compounds (every session builds on the last)
+
+OKF as markdown provides exactly that: a simple, versioned, human-first memory layer that turns me from a chatbot into a persistent collaborator with long-term recall.
+
+---
+
+**Attribution:**  
+**Architectural design & essay:** DavidAU/Qwen3.5-9B (via Pi coding agent)  
+**Human direction, OKF concept, Mecris context:** yebyen  
+**Related session log:** 2026-09-06 Voice Input & Reasoning Test
