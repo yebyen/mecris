@@ -1,21 +1,30 @@
 ---
 type: Architecture
 title: Mecris System Architecture Overview
-description: Mecris is a personal accountability system with Python MCP server, Go services, Android client, and Spin cloud deployment. Core loop: Orient → Plan → Archive → PR-Test.
-generated: { by: agent/cli, at: 2026-09-06T15:36:07Z }
+description: Mecris is a personal accountability system centered on a Python MCP integration layer, user-scoped Neon state, Android/edge clients, and an auditable agent loop.
+generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+sources:
+  - resource: ARCHITECTURE.md
+  - resource: README.md
+  - resource: .mcp.json
+  - resource: AGENTS.md
 ---
 
+# Mecris System Architecture
+
+Mecris combines a local Python MCP server, a Neon Postgres persistence layer, an Android/Kotlin client, and Akamai/Spin edge components. The MCP server is the agent-facing integration layer; live operational state stays in Mecris and Beeminder, while OKF stores curated architecture, decisions, and runbooks.
+
+The development process is the Gall loop: orient, plan, work, archive, and test. The system is deliberately local-first for interactive agent work, with cloud deployment available for edge/mobile synchronization. Read the linked concepts rather than loading the entire repository for routine planning.
+
 # Related Concepts
-- [MCP Server (mcp_server.py)](mcp-server.md): MCP Server is the primary integration layer for all system components
-- [Go Services (mecris-go, mecris-go-spin, mecris-go-project)](go-services.md): Go services provide performance-critical backend functionality
-- [Beeminder Goal Integration](beeminder-integration.md): Beeminder integration provides goal tracking and accountability mechanisms
-- [Urbit Gall Agent Pattern Loop](gall-loop.md): Gall loop orchestrates the core agent development cycle
-- [Specialized Technical Skills Integration](specialized-skills.md): Specialized skills extend agent capabilities for specific domains
-- [Prometheus Status Skill](infrastructure/prometheus-status.md): Prometheus Status skill provides monitoring infrastructure observability
-- [Alertmanager Install Skill](infrastructure/alertmanager-install.md): Alertmanager Install skill manages alerting infrastructure for system notifications
-- [Flux Status Skill](infrastructure/flux-status.md): Flux Status skill provides GitOps deployment observability
-- [Kubeconfig Setup Skill](infrastructure/kubeconfig-setup.md): Kubeconfig Setup skill manages Kubernetes access for service deployment
-- [Mecris Architectural Philosophy: The Diseased Forest](philosophy.md): Architectural philosophy defines Mecris as a parasite feeding on human failure with cloud/local duality
-- [Neon DB - The Forest Floor](data/neon-db.md): Neon DB serves as the persistent storage layer (Forest Floor) for all Mecris data
-- [Iron Heart - Akamai/Fermyon Cloud Machines](infrastructure/iron-heart.md): Iron Heart provides scalable cloud backend capacity for Mecris services
-- [Standard of Bone - JSON/WIT Communication Language](standards/standard-of-bone.md): Standard of Bone enables JSON/WIT communication between all Mecris components
+- [MCP Server (`mcp_server.py`)](mcp-server.md): Python stdio MCP is the agent-facing integration layer
+- [Edge Runtimes & Clients](edge-and-clients.md): Android and edge runtimes extend the local MCP system
+- [Beeminder Accountability Integration](beeminder-integration.md): Beeminder supplies live accountability state
+- [Mecris Gall Loop](gall-loop.md): The Gall loop governs agent work and state serialization
+- [Mecris Architectural Philosophy: The Diseased Forest](philosophy.md): The metaphor records system intent and local-first posture
+- [Neon Data Architecture — The Forest Floor](data/neon-db.md): Neon Postgres is the user-scoped durable state layer
+- [Narrator Context as Primary Agent Sensor](narrator-context.md): Narrator context is the compact live sensor used during orientation
+- [Daily Aggregate and Majesty Cake](daily-aggregate.md): Daily aggregate summarizes today's accountability components
+- [Agent Session Bootstrap](../runbooks/agent-bootstrap.md): Every agent session begins with the bootstrap runbook
+- [Beeminder Emergency Response](../runbooks/beeminder-emergency.md): Urgent goal risk is handled by the Beeminder emergency runbook
+- [JSON/WIT Communication Boundary](standards/standard-of-bone.md): JSON and WIT define portable component communication boundaries

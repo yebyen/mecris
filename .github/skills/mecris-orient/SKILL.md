@@ -18,12 +18,13 @@ Orientation skill for the Mecris accountability system. Produces a structured si
 
 Runs the full orientation workflow autonomously:
 
+0. Read `runbooks/agent-bootstrap` with `okf show runbooks/agent-bootstrap knowledge`. Then search `knowledge/` for the topic named by `NEXT_SESSION.md` using `okf search "<topic>" knowledge --limit 3 --json`; inspect only relevant hits.
 1. Read `NEXT_SESSION.md` — pending verifications, last known state
 2. Read recent git log on current repo (`git log --oneline -10`)
 3. Fetch open issues from kingdonb/mecris filtered by labels: `needs-test`, `pr-review`, `bug`
 4. Fetch open issues from yebyen/mecris (the bot's own issues and health reports)
 5. Check if yebyen/mecris is behind kingdonb/mecris main (upstream sync status)
-6. Produce the situation report (see format below)
+6. Produce the situation report, including a **Prior Knowledge** section for relevant OKF hits (see format below)
 
 **Usage**: Type `/mecris-orient` and the full report will be generated before any other action.
 
@@ -34,6 +35,9 @@ Runs the full orientation workflow autonomously:
 
 ### Pending from last session
 {Items from NEXT_SESSION.md that are unverified or incomplete}
+
+### Prior Knowledge
+{Only relevant OKF concepts, each with its actionable constraint or decision}
 
 ### Recent commits (this repo)
 {Last 5 commits, one line each}

@@ -1,4 +1,11 @@
-.PHONY: test test-python test-rust test-all deploy-fermyon deploy-akamai deploy-all
+.PHONY: test test-python test-rust test-all deploy-fermyon deploy-akamai deploy-all okf-validate okf-check-drift
+
+okf-validate:
+	okf validate knowledge --strict --drift
+
+okf-check-drift:
+	@okf validate knowledge --strict --drift --json | python3 -c 'import sys,json; report=json.load(sys.stdin); sys.exit(0 if report.get("gate_passed") else 1)'
+
 
 test: test-python test-rust
 	@echo "✅ All tests complete"

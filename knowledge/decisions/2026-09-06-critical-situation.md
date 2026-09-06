@@ -1,11 +1,15 @@
 ---
 type: Decision
 title: Critical Situation: Budget Expired, Walk Needed, Reviewstack Derailing Tomorrow
-description: On 2026-09-06, the Mecris system shows: budget period ended 31 days ago, MCP server offline for 2.5 hours, no walk today, and reviewstack goal derailing tomorrow. Immediate actions needed: address budget period, take a walk, and do Arabic review to prevent derailment.
-generated: { by: agent/cli, at: 2026-09-06T15:57:50Z }
+description: A recorded live snapshot that triggered budget extension and accountability priorities; it is historical, not current status.
+generated: { by: agent/cli, at: 2026-09-06T16:18:48Z }
+sources:
+  - resource: session_log.md
+  - resource: mcp_server.py
 ---
 
-# Related Concepts
-- [Budget Governor Service](../architecture/services/budget-governor.md): Decision relates to budget governor service which tracks the expired budget period
-- [Beeminder Goal Integration](../architecture/beeminder-integration.md): Decision relates to beeminder integration which tracks the walk and reviewstack goals
-- [Coaching Service](../architecture/services/coaching-service.md): Decision relates to coaching service which manages language learning including Arabic review
+# Historical Situation Snapshot
+
+On 2026-09-06 the live narrator context reported an expired budget period, no activity for the daily walk, and `reviewstack` at one day of safebuf. The budget period was subsequently extended through 2026-10-07 using the authenticated budget MCP tool.
+
+This record is intentionally historical. Agents must query current narrator and budget status rather than treating these numbers as live.

@@ -1,2 +1,2 @@
 # Data
-* [Neon DB - The Forest Floor](neon-db.md) - Neon DB as 'The Forest Floor' - the rotting mulch of every failure and every success, representing the only truth in Mecris architecture. Persistent storage for all user data, goals, interactions, and system state.
+* [Neon Data Architecture — The Forest Floor](neon-db.md) - Neon Postgres is the persistent truth layer for user-scoped goals, tokens, language state, usage, messages, autonomous turns, budgets, and scheduler elections.

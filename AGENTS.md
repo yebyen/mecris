@@ -121,6 +121,7 @@ When working in this codebase, you must follow the memory conventions:
    - Agent writes declare `generated: { by: "<agent>", at: "<timestamp>" }`. Never forge human verification (`verified:`).
 
 5. **Essential Memory Commands**:
+   - `okf show runbooks/agent-bootstrap knowledge` — **Read first at each session start**; it provides the authenticated Mecris cold-start procedure.
    - `okf search "<query>"` — Query memory using in-memory BM25
    - `okf show <id>` — Inspect concept details and relationship graph
    - `okf create <id> --type <type> --title "<title>" --desc "<desc>"` — Document new fact

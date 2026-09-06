@@ -1,4 +1,4 @@
 # Services
-* [Budget Governor Service](budget-governor.md) - budget_governor.py - Manages AI usage budgets, tracks token consumption across providers (Anthropic, Groq), enforces limits, provides cost optimization recommendations, and includes automatic alerting when budgets exceed thresholds.
-* [Coaching Service](coaching-service.md) - coaching_service.py - Handles language learning velocity stats, review pump lever settings, and language synchronization triggers for personalized language acquisition.
-* [Authentication Service](auth-service.md) - auth_service.py, auth_server.py - Handles user authentication, session management, and secure access to Mecris APIs and MCP endpoints.
+* [Budget Governor Service](budget-governor.md) - Python budget-governor logic enforces provider/bucket envelopes and supplies routing recommendations to agents.
+* [Language Coaching Service](coaching-service.md) - Python language-coaching operations synchronize review pumps and expose velocity/completion information used by daily accountability.
+* [PocketID Authentication and Session Lifecycle](auth-service.md) - PocketID/AppAuth authentication uses shared repository state, rotating refresh tokens, and bounded refresh operations across Android and background workers.

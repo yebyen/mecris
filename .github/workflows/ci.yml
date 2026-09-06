@@ -42,6 +42,11 @@ jobs:
       - name: Disable Submodule Recurse
         run: git config --global submodule.recurse false
 
+      - name: Set up Go for OKF validation
+        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5  # v5.5.0
+        with:
+          go-version: '1.24.x'
+
       - name: Set up JDK 17 for Android
         uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  # v5.2.0 (working hash from release.yml)
         with:
@@ -96,6 +101,12 @@ jobs:
         run: |
           uv venv
           uv pip install -r requirements.txt pytest-cov pytest-asyncio "mcp[cli]>=1.26.0" rich
+
+      - name: Validate OKF Knowledge Bundle
+        run: |
+          go install github.com/okf-memory/okf-agent-memory/cmd/okf@v0.1.0
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+          "$HOME/go/bin/okf" validate knowledge --strict --drift
 
       - name: Initialize Database Schema
         env:

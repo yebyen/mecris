@@ -1,2 +1,4 @@
 # Decisions
-* [Critical Situation: Budget Expired, Walk Needed, Reviewstack Derailing Tomorrow](2026-09-06-critical-situation.md) - On 2026-09-06, the Mecris system shows: budget period ended 31 days ago, MCP server offline for 2.5 hours, no walk today, and reviewstack goal derailing tomorrow. Immediate actions needed: address budget period, take a walk, and do Arabic review to prevent derailment.
+* [Critical Situation: Budget Expired, Walk Needed, Reviewstack Derailing Tomorrow](2026-09-06-critical-situation.md) - A recorded live snapshot that triggered budget extension and accountability priorities; it is historical, not current status.
+* [Cloud Easing: Local Python MCP as Primary Backend](2026-06-cloud-easing.md) - After Akamai/Fermyon deployment failures, local Python MCP became the primary interactive backend; the deployment pivot remains reversible.
+* [Defer OKF MCP Server Integration](2026-09-06-okf-mcp-deferred.md) - Keep OKF on the CLI for now: an stdio initialize smoke test succeeded but the server did not expose tools/list under the tested protocol, so .mcp.json remains unchanged.

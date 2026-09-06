@@ -1,4 +1,84 @@
 ## 2026-09-06
+* **Update**: Updated concept `decisions/2026-09-06-okf-mcp-deferred.md`.
+* **Update**: Linked `decisions/2026-09-06-okf-mcp-deferred.md` to `runbooks/agent-bootstrap.md` (Bootstrap continues to use the supported OKF CLI workflow).
+* **Update**: Updated concept `decisions/2026-09-06-okf-mcp-deferred.md`.
+* **Creation**: Documented concept `decisions/2026-09-06-okf-mcp-deferred.md` (Defer OKF MCP Server Integration).
+* **Update**: Updated concept `architecture/standards/standard-of-bone.md`.
+* **Update**: Updated concept `architecture/services/auth-service.md`.
+* **Update**: Updated concept `architecture/services/budget-governor.md`.
+* **Update**: Updated concept `architecture/services/coaching-service.md`.
+* **Update**: Updated concept `architecture/data/neon-db.md`.
+* **Update**: Updated concept `architecture/philosophy.md`.
+* **Update**: Updated concept `architecture/beeminder-integration.md`.
+* **Update**: Updated concept `architecture/mcp-server.md`.
+* **Update**: Updated concept `architecture/daily-aggregate.md`.
+* **Update**: Updated concept `architecture/edge-and-clients.md`.
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Updated concept `architecture/gall-loop.md`.
+* **Update**: Updated concept `architecture/narrator-context.md`.
+* **Update**: Updated concept `decisions/2026-06-cloud-easing.md`.
+* **Update**: Updated concept `decisions/2026-09-06-critical-situation.md`.
+* **Update**: Updated concept `runbooks/beeminder-emergency.md`.
+* **Update**: Updated concept `runbooks/agent-bootstrap.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/standards/standard-of-bone.md` (JSON and WIT define portable component communication boundaries).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/services/auth-service.md` to `runbooks/agent-bootstrap.md` (Authentication is required before live MCP calls).
+* **Update**: Updated concept `architecture/services/auth-service.md`.
+* **Update**: Linked `architecture/services/budget-governor.md` to `decisions/2026-09-06-critical-situation.md` (The snapshot recorded a budget-period correction).
+* **Update**: Updated concept `architecture/services/budget-governor.md`.
+* **Update**: Linked `architecture/philosophy.md` to `decisions/2026-06-cloud-easing.md` (Cloud easing is the current reversible strategic posture).
+* **Update**: Updated concept `architecture/philosophy.md`.
+* **Update**: Linked `architecture/narrator-context.md` to `runbooks/beeminder-emergency.md` (Narrator alerts provide the emergency runbook inputs).
+* **Update**: Updated concept `architecture/narrator-context.md`.
+* **Update**: Linked `architecture/data/neon-db.md` to `decisions/2026-06-cloud-easing.md` (The local-first decision changes which persistence path is primary).
+* **Update**: Updated concept `architecture/data/neon-db.md`.
+* **Update**: Linked `architecture/services/coaching-service.md` to `architecture/daily-aggregate.md` (Language review state contributes to the daily aggregate).
+* **Update**: Updated concept `architecture/services/coaching-service.md`.
+* **Update**: Linked `architecture/beeminder-integration.md` to `architecture/daily-aggregate.md` (Beeminder activity feeds aggregate accountability).
+* **Update**: Updated concept `architecture/beeminder-integration.md`.
+* **Update**: Linked `architecture/beeminder-integration.md` to `runbooks/beeminder-emergency.md` (Live goal risk is interpreted by the emergency procedure).
+* **Update**: Updated concept `architecture/beeminder-integration.md`.
+* **Update**: Linked `architecture/gall-loop.md` to `decisions/2026-09-06-critical-situation.md` (The historical snapshot was discovered through orientation).
+* **Update**: Updated concept `architecture/gall-loop.md`.
+* **Update**: Linked `architecture/gall-loop.md` to `runbooks/agent-bootstrap.md` (Bootstrap is the cold-start prelude to the Gall loop).
+* **Update**: Updated concept `architecture/gall-loop.md`.
+* **Update**: Linked `architecture/edge-and-clients.md` to `decisions/2026-06-cloud-easing.md` (Deployment posture governs which edge runtime is authoritative).
+* **Update**: Updated concept `architecture/edge-and-clients.md`.
+* **Update**: Linked `architecture/edge-and-clients.md` to `architecture/data/neon-db.md` (Edge sync components and clients persist user-scoped state).
+* **Update**: Updated concept `architecture/edge-and-clients.md`.
+* **Update**: Linked `architecture/mcp-server.md` to `architecture/narrator-context.md` (Narrator context is an MCP operation).
+* **Update**: Updated concept `architecture/mcp-server.md`.
+* **Update**: Linked `architecture/mcp-server.md` to `architecture/services/auth-service.md` (MCP access depends on authenticated Mecris sessions).
+* **Update**: Updated concept `architecture/mcp-server.md`.
+* **Update**: Linked `architecture/mcp-server.md` to `architecture/services/coaching-service.md` (MCP exposes language coaching status and controls).
+* **Update**: Updated concept `architecture/mcp-server.md`.
+* **Update**: Linked `architecture/mcp-server.md` to `architecture/services/budget-governor.md` (MCP exposes budget-governor checks and records).
+* **Update**: Updated concept `architecture/mcp-server.md`.
+* **Update**: Linked `architecture/overview.md` to `runbooks/beeminder-emergency.md` (Urgent goal risk is handled by the Beeminder emergency runbook).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `runbooks/agent-bootstrap.md` (Every agent session begins with the bootstrap runbook).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/daily-aggregate.md` (Daily aggregate summarizes today's accountability components).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/narrator-context.md` (Narrator context is the compact live sensor used during orientation).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/data/neon-db.md` (Neon Postgres is the user-scoped durable state layer).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/philosophy.md` (The metaphor records system intent and local-first posture).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/gall-loop.md` (The Gall loop governs agent work and state serialization).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/beeminder-integration.md` (Beeminder supplies live accountability state).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/edge-and-clients.md` (Android and edge runtimes extend the local MCP system).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Update**: Linked `architecture/overview.md` to `architecture/mcp-server.md` (Python stdio MCP is the agent-facing integration layer).
+* **Update**: Updated concept `architecture/overview.md`.
+* **Creation**: Documented concept `architecture/daily-aggregate.md` (Daily Aggregate and Majesty Cake).
+* **Creation**: Documented concept `runbooks/beeminder-emergency.md` (Beeminder Emergency Response).
+* **Creation**: Documented concept `architecture/narrator-context.md` (Narrator Context as Primary Agent Sensor).
+* **Creation**: Documented concept `decisions/2026-06-cloud-easing.md` (Cloud Easing: Local Python MCP as Primary Backend).
+* **Creation**: Documented concept `runbooks/agent-bootstrap.md` (Agent Session Bootstrap).
 * **Update**: Linked `decisions/2026-09-06-critical-situation.md` to `architecture/services/coaching-service.md` (Decision relates to coaching service which manages language learning including Arabic review).
 * **Update**: Updated concept `decisions/2026-09-06-critical-situation.md`.
 * **Update**: Linked `decisions/2026-09-06-critical-situation.md` to `architecture/beeminder-integration.md` (Decision relates to beeminder integration which tracks the walk and reviewstack goals).

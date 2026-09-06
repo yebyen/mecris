@@ -464,3 +464,15 @@ OKF as markdown provides exactly that: a simple, versioned, human-first memory l
 **Human direction, OKF concept, Mecris context:** yebyen  
 **Related session log:** 2026-09-06 Voice Input & Reasoning Test
 OKF Knowledge Base Setup Complete - 2026-09-06: Initialized OKF v0.2 bundle, created 17 architectural concepts, validated all operations. OKF ready for agent workflow integration.
+
+## 2026-09-06 — OKF knowledge bundle corrected and integrated into the agent loop
+
+**Planned**: Execute `docs/OKF_IMPROVEMENT_PLAN.md`: repair the initial scaffold, curate capability-level knowledge, add validation automation, and wire memory into the Gall loop.
+
+**Done**: Replaced fabricated Go/cloud claims with sourced deployment and client facts; pruned five one-line infrastructure/skill nodes; rewrote the retained concepts with bodies and structured sources; added six high-value concepts (agent bootstrap, Beeminder emergency response, narrator context, daily aggregate, cloud easing, and deferred MCP integration). Added `make okf-validate`, a knowledge-aware pre-commit hook, an OKF validation CI step, and OKF procedures in the Orient, Plan, and Archive skills. Extended the live budget period through 2026-10-07 and verified 31 days remaining.
+
+**Skipped**: OKF MCP registration. The installed server completed initialization but returned `Method not found` for the tested `tools/list` request; CLI usage remains the verified interface.
+
+**Validation**: `okf validate knowledge --strict --drift` and `make okf-validate` both passed with 18 concepts, 0 errors, 0 warnings, 0 broken links, and 0 orphans.
+
+**Next**: Commit this archive state, push `okf/knowledge-improvement`, open a PR, and verify the required CI workflow including OKF validation.
