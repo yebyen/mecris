@@ -46,3 +46,7 @@ it coexists with any other running harness.
 
 ## Skill References
 The `.github/skills/mecris-orient/`, `.github/skills/mecris-plan/`, `.github/skills/mecris-archive/`, and `.github/skills/mecris-pr-test/` skills are available to the harness. The `mecris-orient` skill requires automatic `user_id` resolution (see `.github/skills/mecris-orient/SKILL.md`).
+
+
+## Minimal Status (/status)
+The `/status` prompt (`.pi/prompts/status.md`) provides a brief status update without the full OKF workflow. It references `.github/skills/mecris-status/SKILL.md` and requires automatic `user_id` resolution. Use `/status` for quick checks before `/mecris-plan` when a rapid situation report is sufficient.
