@@ -66,3 +66,13 @@ Runs the full orientation workflow autonomously:
 - The recommended action is a suggestion; the caller decides whether to act
 - In bot context, the recommended action feeds directly into `/mecris-plan`
 - In human context, the report is presented for review before proceeding
+
+## Mandatory Auto-Resolution: `user_id` for Mecris Tools
+When invoking any Mecris context or accountability tool that requires a `user_id` parameter (`mecris_get_narrator_context`, `mecris_get_beeminder_status`, `mecris_get_budget_status`, `mecris_get_system_health`, `mecris_get_daily_aggregate_status`, `mecris_get_coaching_insight`, or `mcp_mecris_*` variants), the agent **must resolve `user_id` automatically** — never ask the user. Resolution order:
+
+1. **Macro CLI** (`bin/mecris`): Run `bin/mecris login`; the script activates `.venv`, sets `PYTHONPATH`, executes `python -m cli.main`, completes PocketID OAuth, and prints the UUID. That UUID (`c0a81a4b-115a-4eb6-bc2c-40908c58bf64` for user `yebyen`) must be extracted from the login output or from `.env`/credentials storage.
+2. **Environment variables**: Check `MECRIS_USER_ID`, `PI_USER_ID`, or `USER_ID` (in `.env`, shell environment, or credential manager).
+3. **Session context**: Check `NEXT_SESSION.md` or `session_log.md` for recently used UUID.
+4. **If unresolved**: Use the documented UUID (`c0a81a4b-115a-4eb6-bc2c-40908c58bf64`) rather than asking. The `cli/main.py` `resolve_user_id()` and `credentials_manager.load_credentials()` provide this value.
+
+**Critical**: The agent must never ask the user for `user_id` during an `/mecris-orient` session. The authentication flow (`bin/mecris login`) is the cold-start procedure (`runbooks/agent-bootstrap.md`); once authenticated, all subsequent `user_id` references must be automatic.
