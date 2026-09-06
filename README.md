@@ -49,7 +49,9 @@ bin/mecris login  # Self-activates .venv, sets PYTHONPATH, launches auth
 # 2. Configure environment (copy and edit .env.example if needed)
 # Set BEEMINDER_USERNAME, BEEMINDER_AUTH_TOKEN, TWILIO credentials, etc.
 
-# 3. Launch the MCP server (local Python backend: mcp_server.py)
+# 3. MCP server is embedded (not manually launched)
+# The harness loads it automatically via .mcp.json (command: uv run --project . mcp_server.py --stdio).
+# If you must verify: ./scripts/launch_server.sh (manual fallback)
 ./scripts/launch_server.sh
 
 # 4. Test health endpoint
@@ -69,7 +71,7 @@ Mecris is a **cloud-coordinated, local-first** accountability system. It is desi
                 ┌────────────────┴──────┐      ▼────────────────┐
                 │   CLOUD HUB (WASM API)│      │   LOCAL MCP    │
                 ├───────────────────────┤      │ (Python / SQL) │
-                │   INACTIVE: FERMYON  │      └──────┬─────────┘
+                │   INACTIVE: FERMYON  │ (deprovisioned; see 2026-06-cloud-easing) │      └──────┬─────────┘
                 │   ACTIVE: AKAMAI     │             │
                 └───────────┬───────────┘             │
                             │                         │
@@ -87,7 +89,7 @@ Mecris is a **cloud-coordinated, local-first** accountability system. It is desi
 
 *   **The Hubs**: Distributed logic centers that manage "Knowledge" (Neon DB) and "Actions" (Twilio/Beeminder).
     *   **Local MCP (Primary)**: Your local Python server. It bridges local data (Obsidian) and maintains a direct connection to Neon. It is the primary interface for humans and narrators.
-    *   **Cloud Hub (Failover/Mobile)**: Hosted on Fermyon or Akamai. It provides high-availability API endpoints for the Android app and scheduled cron triggers for autonomous nagging.
+    *   **Cloud Hub (Failover/Mobile)**: Hosted on **Akamai (ACTIVE)**. Fermyon is **INACTIVE/deprovisioned** (see `decisions/2026-06-cloud-easing.md`). The cloud path provides high-availability endpoints; the local Python MCP (`mcp_server.py`) is embedded in the harness (`.mcp.json`) and is the primary interactive backend.
 *   **The Bus**: All components interact via a language-neutral Standard Bus (JSON/WIT), ensuring that your Android app and your terminal see the same reality.
 *   **The Spokes**: Lightweight "Hosts" (Mobile, CLI, and Bots) provide sensors and interfaces to the human.
     *   **Mobile Go**: Android client bridging physical sensors (Google Fit/Health Connect).
@@ -103,13 +105,12 @@ Mecris can be driven by multiple agent harnesses. Each has different tradeoffs (
 
 | Harness | Model Backend | Local-First? | Token Efficiency | Status | Docs |
 |---|---|---|---|---|---|
-| **py_harness** | Ollama (Gemma 4, Qwen) | ✅ Yes | ⭐⭐⭐ (1.5k core) | ⚠️ Partial (harness exists; not fully documented in OKF bundle) | [py_harness/README.md](py_harness/README.md) |
-| **Pi (TypeScript extension)** | Any (Copilot, Groq, Anthropic, Google, local) | Optional | ⭐⭐ (5 tools + loader) | ✅ Active | [docs/PI_MECRIS_GUIDE.md](docs/PI_MECRIS_GUIDE.md) |
-| **Claude Code** | Claude models | ❌ No | ⭐⭐ (all 34 tools) | ✅ Active | [.mcp.json](.mcp.json) |
-| **Gemini CLI** | Gemini models | ❌ No | ⭐⭐ (all 34 tools) | ✅ Active | [.gemini/settings.json](.gemini/settings.json) |
-| **Antigravity CLI** | Gemini models | ❌ No | ⭐⭐ (all 34 tools) | ✅ Active | [.gemini/antigravity-cli/](docs/) |
+| **Pi (TypeScript extension)** | Any (Copilot, Groq, Anthropic, Google, local) | Optional | ⭐⭐ (5 tools + loader) | ✅ Active (official harness; embedded MCP via .mcp.json) | [docs/PI_MECRIS_GUIDE.md](docs/PI_MECRIS_GUIDE.md) |
+| **Claude Code** | Claude models | ❌ No | ⭐⭐ (all 34 tools) | ✅ Active (explicit mcp__mecris__* permissions in .claude/settings.local.json) | [.mcp.json](.mcp.json) |
+| **Antigravity CLI** | Gemini models | ❌ No | ⭐⭐ (all 34 tools) | ✅ Active (replaced deprecated Gemini 'Google Code') | [.gemini/antigravity-cli/](docs/) |
+| **py_harness** (Ollama) | Ollama (Gemma 4) | ✅ Yes | ⭐⭐⭐ (1.5k core) | ⚠️ Partial (exists; not fully verified in OKF bundle) | [py_harness/README.md](py_harness/README.md) |
 
-**Pick your harness:**
+**Pick your harness (official: Pi; verified: Claude Code; deprecated: Gemini 'Google Code' → Antigravity):**
 - **Local + fast?** Use `py_harness` (Ollama on your machine)
 - **Multi-model + vendor-agnostic?** Use **Pi** (bring your own model/provider)
 - **Specific vendor?** Use Claude Code (Claude), Gemini CLI (Gemini), or Antigravity (Gemini)
