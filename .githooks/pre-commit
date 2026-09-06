@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Validate the curated OKF corpus only when it is part of the staged change.
+set -euo pipefail
+
+if git diff --cached --name-only | grep -q '^knowledge/'; then
+  echo "Validating OKF knowledge bundle..."
+  make okf-validate
+fi

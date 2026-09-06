@@ -1,26 +1,26 @@
-# Next Session: Release v0.0.1 GA & Continuous Multi-Arm Soak
+# Next Session: Open and validate the OKF knowledge-improvement PR
 
-## 📌 Active Context & Release Status
-- **Current Target**: `v0.0.1` GA (Android `versionCode = 32`, `versionName = "0.0.1"`)
-- **Release Branch**: `release/v0.0.1`
-- **Key Accomplishments in this Session**:
-  1. **PocketID v2.13.0 Upgrade**: Upgraded the containerized Synology PocketID identity provider from `v2.4.0` to OpenID Connect Certified™ `v2.13.0`. Confirmed that `offline_access` is actively advertised in `scopes_supported` and client settings configure 1-day access tokens with 30-day sliding refresh tokens.
-  2. **ADB Forensics & Android Error Hardening**:
-     - Identified root cause of the 300ms immediate `TOKEN_EXPIRED` failure: `refreshToken` was null in `v2.4.0`, causing AppAuth to synchronously throw `ID_TOKEN_VALIDATION_ERROR` locally on resume.
-     - Added `AuthError.NoRefreshToken` (`NO_REFRESH_TOKEN`) taxonomy variant in `AuthError.kt` to differentiate missing refresh tokens from true 30-day window expirations.
-     - Hardened `PocketIdAuthRepository.kt` with explicit refresh token logging and gated background workers on valid refresh token availability.
-     - Added full test suite `AuthErrorTest.kt` (100% green).
-  3. **Documentation & Blog**: Authored [`blog/2026-08-16-pocketid-v2-13-and-the-30-day-refresh-token.md`](file:///Users/yebyen/w/mecris/blog/2026-08-16-pocketid-v2-13-and-the-30-day-refresh-token.md).
-  4. **Full Ecosystem Version Bump**: Synced version `0.0.1` (VC=32) across `VERSION_MANIFEST.json`, Android `build.gradle.kts`, Spin manifests, `pyproject.toml`, and Web `package.json`.
+## Current Status (2026-09-06)
+- Work is on branch `okf/knowledge-improvement`; do **not** push directly to protected `main`.
+- The bundle contains 21 curated architecture, decision, and runbook concepts. `make okf-validate` passes with 0 errors, 0 warnings, 0 broken links, and 0 orphans.
+- Commits `748f8cbc` (bootstrap), `0db36af6` (plan), `1aae09ec` (implementation), and `141cfa8f` (archive) are pushed; PR [#294](https://github.com/kingdonb/mecris/pull/294) is open against `main`.
+- Mecris budget period was extended via MCP through `2026-10-07` and verified as 31 days remaining / `GOOD`.
+- OKF MCP exposure is intentionally deferred: `okf mcp knowledge` initialized but did not expose `tools/list` under the tested protocol. Continue using the CLI.
 
----
+## Verified This Session
+- [x] Corrected the first-pass false “Go services” and cloud-outage claims; `mecris-go-project` is Android/Kotlin, Akamai is active, and Fermyon is inactive.
+- [x] Pruned low-value one-line infrastructure/skill nodes and replaced them with sourced, capability-oriented concepts.
+- [x] Added `runbooks/agent-bootstrap`, Beeminder emergency handling, narrator context, daily aggregate, cloud-easing, and MCP-defer concepts.
+- [x] Added `make okf-validate`, a knowledge-aware pre-commit hook, CI validation, and OKF steps in Orient, Plan, and Archive skills.
+- [x] Added budget extension decision, Beeminder Majesty Cake integration, and OKF maintenance runbook; fixed duplicate links and updated generated.by fields.
 
-## 🎯 Next Steps Checklist
-1. **Pull Request & CI Validation**:
-   - Push `release/v0.0.1` and open pull request targeting `main`.
-   - Monitor CI pipeline checks across Android, Rust, and Python.
-2. **Merge & Tag v0.0.1**:
-   - Merge `release/v0.0.1` to `main`.
-   - Create and push tag `v0.0.1` to trigger GitHub Actions release distribution.
-3. **Multi-Arm Weekend Chore Soak**:
-   - Run `/chore-weekend-master` across Android, Web, CLI, Twilio, and Akamai WASM edge to celebrate the first official `v0.0.1` milestone.
+## Pending Verification (Next Session)
+- [ ] Confirm PR [#294](https://github.com/kingdonb/mecris/pull/294)'s required **Run Complete Test Suite** passes, including the new OKF validation step.
+- [ ] Confirm the pre-commit hook is active for a fresh clone (`git config core.hooksPath` is a local setting; it is not cloned automatically). Decide whether setup documentation or a bootstrap script should set it.
+- [ ] Use `/mecris-orient` on a real task and measure cold start to first useful action; target <=8 tool calls using `runbooks/agent-bootstrap`.
+- [ ] Revisit `okf mcp` only after checking the installed release's supported MCP protocol/methods.
+
+## Infrastructure Notes
+- Authenticate before live Mecris MCP calls with `bin/mecris login`; it activates `.venv` itself.
+- Load optional capability families with `mecris_load_tools("budget")` (or the relevant keyword).
+- `mecris_get_narrator_context` is MCP-only; `bin/mecris pulse` is the CLI dashboard.

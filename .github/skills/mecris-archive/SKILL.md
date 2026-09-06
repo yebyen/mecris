@@ -20,10 +20,12 @@ Runs the full archive workflow:
 
 1. Determine completion status — did the work match the plan? fully, partially, or not at all?
 2. Close the plan issue with a completion comment
-3. Rewrite `NEXT_SESSION.md` to reflect current reality
-4. Append a dated entry to `SESSION_LOG`
-5. Commit all three with a consistent message
-6. Stop
+3. Review the AGENTS.md OKF end-of-task checklist. Create or update a concept only for a durable decision, requirement, non-obvious discovery, or incident lesson; relate it when useful.
+4. Run `make okf-validate`; fix any errors or warnings before archiving.
+5. Rewrite `NEXT_SESSION.md` to reflect current reality
+6. Append a dated entry to `SESSION_LOG`, including a one-line summary of relevant `knowledge/log.md` changes.
+7. Commit all changed archive and knowledge files with a consistent message
+8. Stop
 
 **Usage**: Type `/mecris-archive` when the work is done. Always runs, even on failure.
 
@@ -88,7 +90,7 @@ Append (do not overwrite) a dated entry:
 ## Step 4 — Commit
 
 ```
-git add NEXT_SESSION.md SESSION_LOG scripts/bot-prompt.txt
+git add NEXT_SESSION.md session_log.md knowledge/ scripts/bot-prompt.txt
 git commit -m "archive({DATE}): {one-line summary}
 
 Plan: #{issue_number}
@@ -113,3 +115,4 @@ The integrity of the loop depends on honesty here. The next instance will trust 
 - Push is handled by the workflow's final step — archive does not push
 - **No Plan Issue?**: If no plan issue exists, **DO NOT** create a "placeholder" or "retro" issue unless you actually modified code or reached a significant technical milestone that needs recording. If you just oriented and did nothing, just update `NEXT_SESSION.md` and stop.
 - SESSION_LOG lives at `session_log.md` in the repo root
+- Avoid recording routine tool output, daily dashboard values, or speculative notes in OKF. Search before creating and prefer updating an existing concept.

@@ -24,8 +24,9 @@ Runs the full planning workflow:
    - **Because**: one sentence — what in the orient report motivates this
    - **Validation**: one sentence — how to confirm it worked
 3. Open a GitHub issue on yebyen/mecris with title `[plan] {intent}` and body containing all three parts
-4. **RECORD** the issue number in your internal scratchpad/history immediately — you will need it for `/mecris-archive`.
-5. **VERIFY** that the issue creation was successful before proceeding to work.
+4. If the work touches architecture, data, authentication, deployment, or a durable operating rule, add a **Knowledge impact** line naming the existing OKF concept(s) to update or the new concept to create.
+5. **RECORD** the issue number in your internal scratchpad/history immediately — you will need it for `/mecris-archive`.
+6. **VERIFY** that the issue creation was successful before proceeding to work.
 
 **Usage**: Type `/mecris-plan` after orienting. The spec issue will be opened before any action proceeds.
 
@@ -40,6 +41,8 @@ Issue body:
 **Because**: {what orient showed that motivates this — cite the source: issue number, commit, or NEXT_SESSION.md item}
 
 **Validation**: {observable outcome that confirms success — test pass, issue closed, datapoint in Beeminder, etc.}
+
+**Knowledge impact**: {OKF concept IDs to update/create, or `none` for a transient task}
 ```
 
 ## Examples
