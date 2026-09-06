@@ -57,6 +57,18 @@ make okf-validate    # 21 concepts, 0 errors, 0 broken links
 ```
 `.githooks/pre-commit` validates automatically. CI (`.github/workflows/ci.yml`) runs `okf validate` on every PR.
 
+## Quick Update: How `/mecris-orient` Translates to Action
+When the user asks "What's my status?" or triggers `/mecris-orient` (`.github/skills/mecris-orient/SKILL.md`), the agent executes the following translation flow:
+
+1. **Read this runbook** (`okf show runbooks/agent-bootstrap`) — establishes authentication state (`.venv`, UUID `c0a81a4b-...`, `PYTHONPATH`), lazy-loading (`mecris_load_tools`), and PR-protection.
+2. **Search the task topic** (`okf search "<topic>" --limit 3 --json`) — finds relevant concepts (e.g., `budget-extension`, `beeminder-emergency`, `narrator-context`).
+3. **Query live situation** (`mecris_get_narrator_context` or `bin/mecris pulse`) — retrieves `urgent_items`, `recommendations`, `budget_status`, `system_pulse`.
+4. **Interpret recommendations** (per `architecture/narrator-context.md`): read `priority` (`IMMEDIATE` = SNAPPY/LOCKSY, `TODAY` = LOCKSY, `SOON` = BATCHY/UNDULY), match `action` to runbook procedure (`runbooks/beeminder-emergency.md` for `IMMEDIATE`, `agent-bootstrap.md` for `TODAY`/`SOON`), and confirm `context` links to correct OKF concept.
+5. **Select the smallest safe next action** — the `recommendations` array is authoritative. Do not invent actions not listed. Confirm `satisfied`/`goal_met` fields from `architecture/daily-aggregate.md` before declaring goal completion.
+6. **Archive** (`/mecris-archive`) — close spec, validate OKF (`make okf-validate`), log to `NEXT_SESSION.md`/`session_log.md`.
+
+This closes the update loop: live state (`mcp_server.py`) → interpreted recommendation (`narrator-context.md`) → smallest action (`agent-bootstrap.md` + `beeminder-emergency.md`) → serialized archive (`NEXT_SESSION.md` + `session_log.md`).
+
 ## Related Concepts
 - [Agent Session Bootstrap](agent-bootstrap.md): Self-reference.
 - [System Overview](../architecture/overview.md): High-level architecture.
