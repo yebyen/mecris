@@ -1,26 +1,39 @@
-# Next Session: Open and validate the OKF knowledge-improvement PR
+# Next Session: Validate deterministic Pi status and merge PR #296
 
 ## Current Status (2026-09-06)
-- Work is on branch `okf/knowledge-improvement`; do **not** push directly to protected `main`.
-- The bundle contains 21 curated architecture, decision, and runbook concepts. `make okf-validate` passes with 0 errors, 0 warnings, 0 broken links, and 0 orphans.
-- Commits `748f8cbc` (bootstrap), `0db36af6` (plan), `1aae09ec` (implementation), and `141cfa8f` (archive) are pushed; PR [#294](https://github.com/kingdonb/mecris/pull/294) is open against `main`.
-- Mecris budget period was extended via MCP through `2026-10-07` and verified as 31 days remaining / `GOOD`.
-- OKF MCP exposure is intentionally deferred: `okf mcp knowledge` initialized but did not expose `tools/list` under the tested protocol. Continue using the CLI.
 
-## Verified This Session
-- [x] Corrected the first-pass false “Go services” and cloud-outage claims; `mecris-go-project` is Android/Kotlin, Akamai is active, and Fermyon is inactive.
-- [x] Pruned low-value one-line infrastructure/skill nodes and replaced them with sourced, capability-oriented concepts.
-- [x] Added `runbooks/agent-bootstrap`, Beeminder emergency handling, narrator context, daily aggregate, cloud-easing, and MCP-defer concepts.
-- [x] Added `make okf-validate`, a knowledge-aware pre-commit hook, CI validation, and OKF steps in Orient, Plan, and Archive skills.
-- [x] Added budget extension decision, Beeminder Majesty Cake integration, and OKF maintenance runbook; fixed duplicate links and updated generated.by fields.
+- Work is on `okf/continuous-improvement`; `main` remains PR-protected.
+- PR [#296](https://github.com/kingdonb/mecris/pull/296) is titled **feat(pi): deterministic Mecris status and progressive context loading**.
+- The OKF bundle contains 23 concepts and passes strict validation with 0 errors, 0 warnings, 0 broken links, 0 orphans, and 0 stale concepts.
+- The original OKF improvement plan is complete except for the explicitly deferred OKF MCP integration and now lives at `docs/attic/OKF_IMPROVEMENT_PLAN.md`.
 
-## Pending Verification (Next Session)
-- [ ] Confirm PR [#294](https://github.com/kingdonb/mecris/pull/294)'s required **Run Complete Test Suite** passes, including the new OKF validation step.
-- [ ] Confirm the pre-commit hook is active for a fresh clone (`git config core.hooksPath` is a local setting; it is not cloned automatically). Decide whether setup documentation or a bootstrap script should set it.
-- [ ] Use `/mecris-orient` on a real task and measure cold start to first useful action; target <=8 tool calls using `runbooks/agent-bootstrap`.
-- [ ] Revisit `okf mcp` only after checking the installed release's supported MCP protocol/methods.
+## What Changed
 
-## Infrastructure Notes
-- Authenticate before live Mecris MCP calls with `bin/mecris login`; it activates `.venv` itself.
-- Load optional capability families with `mecris_load_tools("budget")` (or the relevant keyword).
-- `mecris_get_narrator_context` is MCP-only; `bin/mecris pulse` is the CLI dashboard.
+- `/status` is now a native Pi extension command. It bypasses the LLM, calls `get_narrator_context` with `{}`, and renders five deterministic lines.
+- `/mecris [focus]` remains model-mediated for richer interpretation.
+- FastMCP narrator results are unwrapped from `structuredContent.result`; the missing unwrap caused the first `/status` output to show `unknown` and `?/?`.
+- Pi exposes only `get_narrator_context` plus `mecris_load_tools` at startup; forty deferred tools remain available through the loader.
+- Optional `user_id` is hidden from Pi's core read-only schema. The backend resolves the logged-in identity from `~/.mecris/credentials.json`; `DEFAULT_USER_ID` is only a fallback.
+- Hardcoded identity values were removed from prompts, committed harness configuration, and OKF articles.
+- `AGENTS.md` was reduced from 7,987 bytes to 1,449 bytes. OKF details now load progressively through the `okf-agent-memory` skill and relevant runbooks.
+- Added `decisions/2026-09-06-deterministic-status` and corrected narrator-context, MCP-server, daily-aggregate, Gall-loop, bootstrap, and maintenance knowledge.
+
+## Validation Completed
+
+- [x] Live `get_narrator_context()` succeeds with no explicit identity and with `DEFAULT_USER_ID` removed from the process environment.
+- [x] Live MCP response confirmed the `structuredContent.result` wrapper.
+- [x] Corrected parser returns real fields (`budget_health=GOOD`, daily score `0/3`).
+- [x] Pi extension loads via `pi -e ./.pi/extensions/mecris/index.ts --list-models`.
+- [x] Credential/MCP/narrator tests: 37 passed.
+- [x] `make okf-validate` passes cleanly.
+
+## Pending Before Merge
+
+- [ ] In a fresh Pi session, run `/reload`, then `/status`; confirm five populated lines and no model turn.
+- [ ] Run `/mecris` once and confirm the selected model still provides the richer narrative path.
+- [ ] Wait for the latest PR #296 CI run after the maintenance commits.
+- [ ] Merge PR #296 only after those checks pass.
+
+## Local Environment Note
+
+The functional Python 3.13 environment was restored as `.venv`. The incomplete Python 3.14 environment is retained locally as `.venv_py314_incomplete` for reversible cleanup; neither directory is committed.

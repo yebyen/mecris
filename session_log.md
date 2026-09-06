@@ -467,7 +467,7 @@ OKF Knowledge Base Setup Complete - 2026-09-06: Initialized OKF v0.2 bundle, cre
 
 ## 2026-09-06 — OKF knowledge bundle corrected and integrated into the agent loop
 
-**Planned**: Execute `docs/OKF_IMPROVEMENT_PLAN.md`: repair the initial scaffold, curate capability-level knowledge, add validation automation, and wire memory into the Gall loop.
+**Planned**: Execute `docs/attic/OKF_IMPROVEMENT_PLAN.md`: repair the initial scaffold, curate capability-level knowledge, add validation automation, and wire memory into the Gall loop.
 
 **Done**: Replaced fabricated Go/cloud claims with sourced deployment and client facts; pruned five one-line infrastructure/skill nodes; rewrote the retained concepts with bodies and structured sources; added six high-value concepts (agent bootstrap, Beeminder emergency response, narrator context, daily aggregate, cloud easing, and deferred MCP integration). Added `make okf-validate`, a knowledge-aware pre-commit hook, an OKF validation CI step, and OKF procedures in the Orient, Plan, and Archive skills. Extended the live budget period through 2026-10-07 and verified 31 days remaining.
 
@@ -500,3 +500,17 @@ OKF Knowledge Base Setup Complete - 2026-09-06: Initialized OKF v0.2 bundle, cre
 
 **Next**: Use the improved OKF bundle in future sessions for orientation, knowledge impact tracking, and maintenance via the pre‑commit hook and CI.
 
+
+## 2026-09-06 — Deterministic Pi status and progressive-context maintenance
+
+**Problem**: Small local tool-calling models could invoke Mecris but spent excessive reasoning on the always-loaded AGENTS/OKF instructions and optional `user_id`. The first model-free `/status` implementation also displayed unknown values because it formatted FastMCP's `structuredContent` wrapper instead of `structuredContent.result`.
+
+**Decision**: Split status into two paths. `/status` is a native Pi extension command that bypasses the LLM and formats five deterministic lines. `/mecris [focus]` remains model-mediated for richer interpretation. Hide optional identity from Pi's core read-only schema and rely on the logged-in credentials file; retain `DEFAULT_USER_ID` only as a standalone fallback.
+
+**Done**: Reduced `AGENTS.md` from 7,987 to 1,449 bytes; reduced active Mecris tools from five to one plus the loader; removed the model-driven status prompt and redundant status skill; removed hardcoded identity values from prompts/config/OKF; corrected FastMCP result unwrapping; restored the working local Python 3.13 environment; created `decisions/2026-09-06-deterministic-status`; corrected narrator-context and review-pump semantics; archived the completed OKF improvement plan.
+
+**Validation**: Live credential-only narrator call succeeded with no explicit identity or environment fallback. Live MCP response unwrapped to budget `GOOD` and daily score `0/3`. Pi extension load succeeded. Relevant tests: 37 passed. OKF: 23 concepts, 0 errors, 0 warnings, 0 broken links, 0 orphans, 0 stale.
+
+**Knowledge delta**: Added deterministic-status decision; updated MCP server, narrator context, daily aggregate, Gall loop, bootstrap, roadmap, Beeminder emergency, and maintenance concepts; removed stale architecture index entries.
+
+**Next**: In a fresh Pi session run `/reload`, test `/status` and `/mecris`, then merge PR #296 after current CI passes.
