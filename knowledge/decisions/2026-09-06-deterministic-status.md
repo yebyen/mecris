@@ -2,7 +2,7 @@
 type: Decision
 title: Deterministic Pi Status and Progressive Context
 description: Make /status a native Pi command that bypasses the LLM, exposes only narrator context by default, infers identity from login credentials, and keeps OKF guidance out of always-on context.
-generated: { by: agent/gpt-5.6-sol, at: 2026-09-06T23:20:00Z }
+generated: { by: agent/gpt-5.6-sol, at: 2026-09-06T23:34:00Z }
 sources:
   - resource: .pi/extensions/mecris/index.ts
   - resource: .pi/extensions/mecris/README.md
@@ -39,7 +39,7 @@ FastMCP returns narrator data under `structuredContent.result`. The first determ
 
 ## Expected behavior and tradeoffs
 
-- `/status` may take as long as `get_narrator_context` because the backend still gathers Beeminder, budget, aggregate, weather, presence, and health data. It should not spend model tokens.
+- `/status` may take as long as `get_narrator_context` because the backend still gathers Beeminder, budget, aggregate, weather, presence, and health data. It immediately displays `Fetching Mecris status…` in Pi's footer, clears that indicator on completion or error, and spends no model tokens.
 - `/status` intentionally reports only five lines and may omit useful nuance.
 - `/mecris` is the richer, non-deterministic alternative and depends on the selected model's reasoning quality.
 - Core tool schemas omit identity only in Pi's bridge; the Python functions retain optional `user_id` for explicit multi-user or administrative use.

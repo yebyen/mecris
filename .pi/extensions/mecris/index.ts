@@ -416,6 +416,7 @@ ${stderrOutput}` : errMsg };
         ctx.ui.notify("Mecris is not connected. Try /mecris-reconnect.", "warning");
         return;
       }
+      ctx.ui.setStatus("mecris-status", "Fetching Mecris status…");
       try {
         const result = await client.callTool({
           name: "get_narrator_context",
@@ -429,6 +430,8 @@ ${stderrOutput}` : errMsg };
         });
       } catch (err) {
         ctx.ui.notify(`Mecris status failed: ${err}`, "error");
+      } finally {
+        ctx.ui.setStatus("mecris-status", undefined);
       }
     },
   });
